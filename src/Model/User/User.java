@@ -1,10 +1,15 @@
 package Model.User;
 
+import com.sun.jdi.FloatValue;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class User implements IUser{
+    private Scanner in = new Scanner(System.in);
     private String accountId;
     private String firstname;
     private String lastname;
-    private double initialBalance;
+    private float initialBalance;
 
   @Override
   public void setAccountId(String accountId) {
@@ -17,8 +22,13 @@ public class User implements IUser{
   }
 
   @Override
-  public void setInitialBalcne(double initialBalance) {
-    this.initialBalance = initialBalance;
+  public void setInitialBalance(float initialBalance) {
+    try{
+      this.initialBalance = initialBalance;
+    } catch (InputMismatchException e) {
+      System.out.println("Please enter a valid number!");
+      setInitialBalance(in.nextFloat());
+    }
   }
 
   @Override
@@ -33,11 +43,15 @@ public class User implements IUser{
 
   @Override
   public void setFirstname(String firstname) throws IllegalArgumentException {
-    boolean allLetters = firstname.chars().allMatch(Character::isLetter);
-    if(allLetters)
+    try{
+      boolean allLetters = firstname.chars().allMatch(Character::isLetter);
+      if (!allLetters)
+        throw new IllegalArgumentException();
       this.firstname = firstname;
-    else
-      throw new IllegalArgumentException("Please enter a valid name!");
+    } catch (IllegalArgumentException e){
+      System.out.println("Please enter a valid first name!");
+      setFirstname(in.next());
+    }
   }
 
   @Override
@@ -47,6 +61,14 @@ public class User implements IUser{
 
   @Override
   public void setLastname(String lastname) {
-    this.lastname = lastname;
+    try{
+      boolean allLetters = lastname.chars().allMatch(Character::isLetter);
+      if (!allLetters)
+        throw new IllegalArgumentException();
+      this.lastname = lastname;
+    } catch (IllegalArgumentException e) {
+      System.out.println("Please enter a valid last name!");
+      setLastname(in.next());
+    }
   }
 }

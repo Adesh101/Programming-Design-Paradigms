@@ -19,11 +19,18 @@ public class UserController implements IUserController {
 
   @Override
   public void go() {
-    view.showWelcomeMessage();
-    view.showFirstName();
-    user.setFirstname(in.next());
-    user.setLastname(in.next());
-    user.setAccountId(in.next());
-    user.setInitialBalcne(in.nextDouble());
+    boolean flag = false;
+    while(!flag){
+      view.showWelcomeMessage();
+      view.showFirstName();
+      user.setFirstname(in.next());
+      view.showLastName();
+      user.setLastname(in.next());
+      view.showAccountID();
+      user.setAccountId(in.next());
+      view.showInitialBalance();
+      user.setInitialBalance(in.nextFloat());
+      flag = true;
+    }
   }
 }

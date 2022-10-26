@@ -5,7 +5,7 @@ public interface IUser {
 
   String getAccountId();
 
-  void setInitialBalcne(double initialBalance);
+  void setInitialBalance(float initialBalance);
 
   double getInitialBalance();
 
