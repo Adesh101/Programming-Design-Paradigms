@@ -1,6 +1,5 @@
 package Model.User;
 
-import com.sun.jdi.FloatValue;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,7 +12,14 @@ public class User implements IUser{
 
   @Override
   public void setAccountId(String accountId) {
-    this.accountId = accountId;
+    try{
+      if(accountId.length() > 5)
+        throw new IllegalArgumentException("Please enter a valid 5-digit account number.");
+      this.accountId = accountId;
+    } catch (IllegalArgumentException e) {
+      System.out.println("Please enter a valid 5-digit account number.");
+      setAccountId(in.next());
+    }
   }
 
   @Override
@@ -22,12 +28,14 @@ public class User implements IUser{
   }
 
   @Override
-  public void setInitialBalance(float initialBalance) {
+  public void setInitialBalance(String initialBalance) {
+    float checkInput = -1;
     try{
-      this.initialBalance = initialBalance;
-    } catch (InputMismatchException e) {
+      checkInput = Float.parseFloat(initialBalance);
+      this.initialBalance = checkInput;
+    } catch (NumberFormatException e) {
       System.out.println("Please enter a valid number!");
-      setInitialBalance(in.nextFloat());
+      setInitialBalance(in.next());
     }
   }
 
