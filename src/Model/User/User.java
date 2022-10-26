@@ -32,8 +32,12 @@ public class User implements IUser{
   }
 
   @Override
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
+  public void setFirstname(String firstname) throws IllegalArgumentException {
+    boolean allLetters = firstname.chars().allMatch(Character::isLetter);
+    if(allLetters)
+      this.firstname = firstname;
+    else
+      throw new IllegalArgumentException("Please enter a valid name!");
   }
 
   @Override
