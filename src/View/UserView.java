@@ -33,16 +33,14 @@ public class UserView implements IUserView {
   @Override
   public void showInitialBalance() {
     out.println("Enter initial balance:");
+    /**
+     * even i want to code
+     */
   }
 
   @Override
   public void showError() {
-    out.println("Enter valid input");
-    /**
-     *
-     * hello
-     */
-  }
+    out.println("Enter valid input");}
 
 //  @Override
 //  public void printUserDetails() {
