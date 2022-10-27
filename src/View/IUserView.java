@@ -7,4 +7,5 @@ public interface IUserView {
   void showAccountID();
   void showInitialBalance();
   void showError();
+//  void printUserDetails();
 }

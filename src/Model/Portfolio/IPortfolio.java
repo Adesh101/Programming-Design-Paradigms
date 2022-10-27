@@ -1,10 +1,9 @@
 package Model.Portfolio;
 
 public interface IPortfolio {
+  void setPortfolioChoice(int choice);
+  void createPortfolio();
 
-  public void addStock();
-
-  public void removeStock();
 
   public void lockPortfolio();
 

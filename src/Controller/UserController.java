@@ -12,6 +12,7 @@ public class UserController implements IUserController {
   private IUser user;
   private IUserView view;
 
+
   public UserController(IUser user, IUserView view, InputStream in){
     this.user = user;
     this.view = view;
@@ -29,6 +30,7 @@ public class UserController implements IUserController {
     user.setAccountId(in.next());
     view.showInitialBalance();
     user.setInitialBalance(in.next());
+    view.showCreationSuccess();
   }
 }
 
