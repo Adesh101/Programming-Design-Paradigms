@@ -7,7 +7,7 @@ public interface IUser {
 
   void setInitialBalance(String initialBalance);
 
-  double getInitialBalance();
+  float getInitialBalance();
 
   String getFirstname();
 

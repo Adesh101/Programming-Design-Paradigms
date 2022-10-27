@@ -40,7 +40,7 @@ public class User implements IUser{
   }
 
   @Override
-  public double getInitialBalance() {
+  public float getInitialBalance() {
     return initialBalance;
   }
 

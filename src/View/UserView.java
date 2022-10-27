@@ -38,9 +38,4 @@ public class UserView implements IUserView {
   @Override
   public void showError() {
     out.println("Enter valid input");}
-
-//  @Override
-//  public void printUserDetails() {
-//    out.println("First Name: " + );
-//  }
 }

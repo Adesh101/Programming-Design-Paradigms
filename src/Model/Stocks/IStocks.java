@@ -2,13 +2,9 @@ package Model.Stocks;
 
 public interface IStocks {
 
-  void getStockData();
+  String[] callStockAPI(String ticker);
 
-  double getCurrentPrice();
+  double getStockCurrentPrice(String ticker);
 
-  double getHigh();
-
-  double getLow();
-
-  String getSymbol();
+  String getCurrentDate(String date);
 }

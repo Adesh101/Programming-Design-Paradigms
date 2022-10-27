@@ -4,7 +4,7 @@ import Model.User.IUser;
 import Model.User.User;
 import View.IUserView;
 import View.UserView;
-import java.io.InputStream;
+
 
 public class MVCStocks {
 
