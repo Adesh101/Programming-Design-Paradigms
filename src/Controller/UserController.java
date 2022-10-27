@@ -30,7 +30,7 @@ public class UserController implements IUserController {
     user.setAccountId(in.next());
     view.showInitialBalance();
     user.setInitialBalance(in.next());
-    view.showCreationSuccess();
+//    view.showCreationSuccess();
   }
 }
 
