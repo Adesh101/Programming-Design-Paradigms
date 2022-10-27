@@ -1,5 +1,5 @@
 package Controller;
 
-public interface IUserController {
+public interface IController {
   void go();
 }

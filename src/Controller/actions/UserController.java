@@ -1,25 +1,23 @@
-package Controller;
+package Controller.actions;
 
 import Model.User.IUser;
-import View.IUserView;
+import View.View;
 import java.io.InputStream;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class UserController implements IUserController {
+public class UserController implements IActions{
   private Scanner in;
   private IUser user;
-  private IUserView view;
+  private View view;
 
 
-  public UserController(IUser user, IUserView view, InputStream in){
+  public UserController(IUser user, View view, InputStream in){
     this.user = user;
     this.view = view;
     this.in = new Scanner(in);
   }
 
-  @Override
   public void go() {
     view.showWelcomeMessage();
     view.showFirstName();
