@@ -45,14 +45,15 @@ public class View implements IView {
     out.println("2. View existing portfolios");
     out.println("3. View stocks held in the portfolio");
     out.println("4. View invested amount of specific portfolio");
-    out.println("5. View total invested amount of all portfolios");
-    out.println("6. View current amount of specific portfolio");
-    out.println("7. View amount of specific portfolio by date");
-    out.println("8. View current total amount of all portfolios");
-    out.println("9. View current total amount of all portfolios by date");
-    out.println("10. View transaction history");
+    out.println("5. View current amount of specific portfolio");
+    out.println("6. View amount of specific portfolio by date");
+    out.println("7. View transaction history");
   }
   // Create New Portfolio
+  @Override
+  public void showEnterNewPortfolioName(){
+    out.println("Enter a name for the new portfolio");
+  }
   @Override
   public void showTicker(){
     out.println("Enter ticker of the stock you wish to buy.");
@@ -65,6 +66,10 @@ public class View implements IView {
   public void showConfirmation(){
     out.println("The current price of the stock is"); // getprice from stocks
     out.println("Are you sure you want to proceed with the transaction?(Y/N)");
+  }
+  @Override
+  public void showOrderConfirmationDeclined(){
+    out.println("Your order was cancelled.");
   }
 
   @Override

@@ -8,9 +8,11 @@ public interface IView {
 //  void showInitialBalance();
   void showError();
   void showMenu();
+  void showEnterNewPortfolioName();
   void showTicker();
   void showQuantity();
   void showConfirmation();
+  void showOrderConfirmationDeclined();
   void showPostConfirmation();
   void showQuit();
 

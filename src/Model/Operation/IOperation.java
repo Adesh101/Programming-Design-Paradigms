@@ -9,7 +9,7 @@ public interface IOperation {
   void getCurrentAmountOfPortfolio();
   void getAmountByDate();
   void getTransactionHistory();
-
+  void quit();
 
 
 //  void getTicker();
