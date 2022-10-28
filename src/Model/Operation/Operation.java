@@ -1,6 +1,6 @@
-package Model.Trade;
+package Model.Operation;
 
-public class Trade implements ITrade{
+public class Operation implements IOperation {
 
   @Override
   public void getTicker() {

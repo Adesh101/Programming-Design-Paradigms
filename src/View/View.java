@@ -59,7 +59,7 @@ public class View implements IView {
   }
   @Override
   public void showQuantity(){
-    out.print("Enter quantity of the stock you want to buy.");
+    out.println("Enter quantity of the stock you want to buy.");
   }
   @Override
   public void showConfirmation(){
@@ -72,12 +72,11 @@ public class View implements IView {
     out.println("Order placed successfully!");
     out.println("Do you wish to add more stocks?(Y/N)");
   }
+
   @Override
   public void showQuit(){
     out.println("Do you want to quit?(Y/N)");
   }
-
-
 
   @Override
   public void showStockMenu() {
