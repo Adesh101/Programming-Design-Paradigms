@@ -15,10 +15,18 @@ public class Stocks implements IStocks{
     this.stockData = data.callStockAPI(ticker);
     return this.stockData;
   }
+//  @Override
+//  public String[] getAllStocks(){
+//    return "";
+//  }
 
   @Override
   public double getStockCurrentPrice(String ticker) {
     return Double.parseDouble(this.stockData[13]);
+  }
+  @Override
+  public String[] getStockData(){
+    return this.stockData;
   }
 
   @Override

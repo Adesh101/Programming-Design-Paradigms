@@ -29,16 +29,21 @@ public class createPortfolio implements IActions {
   @Override
   public void go() {
     view.showEnterNewPortfolioName();
-    p = new Portfolio(in.next());
-    p.getNewPortfolioName();
+    // check existing name
+
+    p = new Portfolio(in.nextLine());
+//    p.setNewPortfolioName();
     String flag = "";
-    while(!flag.equals("N")){
+    while(!flag.equalsIgnoreCase("N")){
       view.showTicker();
+
+      // check valid ticker
       String ticker = in.next();
       Stocks stocks = new Stocks(ticker);
+
       double currentPrice = stocks.getStockCurrentPrice(ticker);
       view.showCurrentPrice(currentPrice);
-      if(Objects.equals(in.next(), "Y")){
+      if(Objects.equals(in.next().toUpperCase(), "Y")){
         view.showQuantity();
         int quantity = in.nextInt();
         p.addStocksToPortfolio(ticker, quantity, currentPrice);

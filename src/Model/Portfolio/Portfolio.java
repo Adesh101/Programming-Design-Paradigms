@@ -11,10 +11,12 @@ public class Portfolio implements IPortfolio{
   private String name;
   private HashMap<String, List<String>> stocks = new HashMap<String, List<String>>();
   private double totalValue;
+  private ArrayList<String> portfolioNames = new ArrayList<String>();
 
   public Portfolio(String name){
-    this.name = name;
+      this.name = name;
     this.totalValue = 0;
+    this.portfolioNames.add(name);
   }
 
   private Scanner in = new Scanner(System.in);
@@ -34,10 +36,10 @@ public class Portfolio implements IPortfolio{
     return null;
   }
 
-  @Override
-  public void getNewPortfolioName(){
-
-  }
+//  @Override
+//  public void setNewPortfolioName(String name){
+//
+//  }
 
   @Override
   public void fetchStockPrice(String ticker) {

@@ -10,7 +10,7 @@ public interface IPortfolio {
   HashMap<String, List<String>> getPortfolioComposition();
   double totalPortfolioValue();
   void createPortfolio();
-  void getNewPortfolioName();
+//  void setNewPortfolioName(String name);
   void getTicker();
   void getQuantity();
   String getOrderConfirmation(String choice);
