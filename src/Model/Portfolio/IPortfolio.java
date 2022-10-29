@@ -1,7 +1,14 @@
 package Model.Portfolio;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface IPortfolio {
-  void setPortfolioChoice(int choice);
+  void fetchStockPrice(String ticker);
+  void addStocksToPortfolio(String ticker, int quantity, double price);
+
+  HashMap<String, List<String>> getPortfolioComposition();
+  double totalPortfolioValue();
   void createPortfolio();
   void getNewPortfolioName();
   void getTicker();

@@ -1,5 +1,8 @@
 package View;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface IView {
   void showWelcomeMessage();
 //  void showFirstName();
@@ -17,6 +20,10 @@ public interface IView {
   void showQuit();
 
   void showStockMenu();
+
+  void showCurrentPrice(double text);
+
+  void showStockPortfolio(HashMap<String, List<String>> map, double value);
 
   void showStockBuy();
   void showStockSell();

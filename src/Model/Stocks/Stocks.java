@@ -4,6 +4,10 @@ public class Stocks implements IStocks{
 
   String[] stockData;
 
+  public Stocks(String ticker){
+    this.stockData = data.callStockAPI(ticker);
+  }
+
   fetchStockData data = new fetchStockData();
 
   @Override

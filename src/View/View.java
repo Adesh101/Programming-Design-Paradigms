@@ -1,6 +1,8 @@
 package View;
 
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.List;
 
 public class View implements IView {
 
@@ -88,6 +90,26 @@ public class View implements IView {
     out.println("Select one of the option:");
     out.println("1. Buy a stock");
     out.println("2. Sell a stock");
+  }
+
+  @Override
+  public void showCurrentPrice(double text) {
+    out.println("The price of the current stock is : "+text);
+    out.println("Are you sure you wish to proceed with the transaction?(Y/N)");
+  }
+
+  @Override
+  public void showStockPortfolio(HashMap<String, List<String>> map, double value) {
+    System.out.println("Your portfolio composition is: ");
+    System.out.println("Ticker : Buy Price : Quantity : Current Value");
+    for (String string : map.keySet()) {
+      String ticker = string.toString();
+      String price = map.get(string).get(0);
+      String quantity = map.get(string).get(1);
+      String currentValue = map.get(string).get(2);
+      System.out.println(ticker + " : " + price + " : " + quantity + " : " + currentValue);
+    }
+    System.out.println("Your total portfolio value is : " + value);
   }
 
   @Override

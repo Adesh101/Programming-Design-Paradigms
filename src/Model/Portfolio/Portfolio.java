@@ -1,28 +1,25 @@
 package Model.Portfolio;
 
 import Model.Operation.Operation;
-import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Portfolio implements IPortfolio{
+
+  private String name;
+  private HashMap<String, List<String>> stocks = new HashMap<String, List<String>>();
+  private double totalValue;
+
+  public Portfolio(String name){
+    this.name = name;
+    this.totalValue = 0;
+  }
+
   private Scanner in = new Scanner(System.in);
   private Operation operation;
-  @Override
-  public void setPortfolioChoice(int choice) {
-    try{
-      boolean invalidChoice = !(choice == 1 || choice == 2);
-      if(invalidChoice)
-        throw new IllegalArgumentException();
-      if(choice == 1)
-        createPortfolio();
-      else
-        getPortfolio();
-    } catch (IllegalArgumentException e){
-        System.out.println("Invalid choice. Please enter valid choice to proceed");
-        setPortfolioChoice(in.nextInt());
-    }
 
-  }
   @Override
   public void getTicker(){
 
@@ -31,26 +28,51 @@ public class Portfolio implements IPortfolio{
   public void getQuantity(){
 
   }
+
   @Override
-  public String getOrderConfirmation(String choice){
-    try{
-      if(choice.toUpperCase()=="Y")
-        createPortfolio();
-      else if (choice.toUpperCase()=="N")
-        operation.quit();
-      else
-        throw new IllegalArgumentException();
-    }
-    catch (IllegalArgumentException e){
-      System.out.println("Invalid Response. Enter Valid Response Again");
-      getOrderConfirmation(in.next());
-    }
-    return choice;
+  public String getOrderConfirmation(String choice) {
+    return null;
   }
+
   @Override
   public void getNewPortfolioName(){
 
   }
+
+  @Override
+  public void fetchStockPrice(String ticker) {
+
+  }
+
+  @Override
+  public void addStocksToPortfolio(String ticker, int quantity, double price) {
+    if(stocks.containsKey(ticker)){
+      double existingPrice = Double.parseDouble(stocks.get(ticker).get(0));
+      stocks.get(ticker).set(0, String.valueOf((existingPrice+price)/2));
+      int existingNoOfStocks = Integer.parseInt(stocks.get(ticker).get(1));
+      stocks.get(ticker).set(1, String.valueOf(existingNoOfStocks+quantity));
+      double existingTotalStockValue = Double.parseDouble(stocks.get(ticker).get(2));
+      stocks.get(ticker).set(2, String.valueOf(existingTotalStockValue + (quantity*price)));
+      this.totalValue = totalValue + (quantity*price);
+    } else {
+      stocks.put(ticker, new ArrayList<String>());
+      stocks.get(ticker).add(String.valueOf(price));
+      stocks.get(ticker).add(String.valueOf(quantity));
+      stocks.get(ticker).add(String.valueOf(quantity*price));
+      this.totalValue = totalValue + (quantity*price);
+    }
+  }
+
+  @Override
+  public HashMap<String, List<String>> getPortfolioComposition() {
+    return this.stocks;
+  }
+
+  @Override
+  public double totalPortfolioValue() {
+    return this.totalValue;
+  }
+
   @Override
   public void createPortfolio(){
     //addSock()

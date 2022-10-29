@@ -18,8 +18,8 @@ public class PortfolioController implements IActions{
   }
 
   public void go() {
-    view.showCreateNew();
-    view.showExisting();
-    portfolio.setPortfolioChoice(in.nextInt());
+//    view.showCreateNew();
+//    view.showExisting();
+//    portfolio.setPortfolioChoice(in.nextInt());
   }
 }

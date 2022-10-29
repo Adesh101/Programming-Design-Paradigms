@@ -19,14 +19,14 @@ public class UserController implements IActions{
   }
 
   public void go() {
-    view.showWelcomeMessage();
-    view.showFirstName();
-    user.setFirstname(in.next());
-    view.showLastName();
-    user.setLastname(in.next());
-    view.showAccountID();
-    user.setAccountId(in.next());
-    view.showInitialBalance();
+//    view.showWelcomeMessage();
+//    view.showFirstName();
+//    user.setFirstname(in.next());
+//    view.showLastName();
+//    user.setLastname(in.next());
+//    view.showAccountID();
+//    user.setAccountId(in.next());
+//    view.showInitialBalance();
     user.setInitialBalance(in.next());
 //    view.showCreationSuccess();
   }
