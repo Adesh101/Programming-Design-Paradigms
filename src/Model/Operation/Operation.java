@@ -58,8 +58,9 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public void getExistingPortfolios() {
-
+  public String getExistingPortfolios() {
+    //return portfolio.getPortfolioNames().toString();
+    return portfolios.keySet().toString();
   }
 
   @Override
@@ -70,6 +71,11 @@ public class Operation implements IOperation {
   @Override
   public void callStockAPIHelper(String ticker) {
     stocks.callStockAPI(ticker);
+  }
+
+  @Override
+  public void getAmountByDate(String Date) {
+
   }
 
   @Override

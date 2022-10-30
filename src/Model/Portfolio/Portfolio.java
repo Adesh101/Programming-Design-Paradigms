@@ -118,14 +118,15 @@ public class Portfolio implements IPortfolio{
   }
 
   @Override
-  public Set<String> getPortfolioNames() {
-//    ArrayList<String> names= new ArrayList<String>();
-//    for(String s : portfolios.keySet()){
-//      System.out.println(s);
-//      names.add(s);
-//    }
-    System.out.println(portfolios);
-    return portfolios.keySet();
+  public ArrayList<String> getPortfolioNames() {
+    ArrayList<String> names= new ArrayList<String>();
+    for(String s : portfolios.keySet()){
+      //System.out.println(s);
+      names.add(s);
+    }
+    //System.out.println(portfolios);
+    //return portfolios.keySet();
+    return names;
 
 
   }

@@ -2,6 +2,8 @@ package Controller;
 
 import Controller.actions.IActions;
 import Controller.actions.addStockToPortfolio;
+import Controller.actions.showAmountOfPortfolioByDate;
+import Controller.actions.showExistingPortfolios;
 import Model.Operation.IOperation;
 import View.IView;
 import java.util.Scanner;
@@ -32,6 +34,7 @@ public class Controller implements IController {
         case 1:
           action = new createNewPortfolio(operation, view);
           action.go();
+          view.showMenu();
           menuOption = in.nextInt();
           flag = false;
           break;
@@ -39,13 +42,22 @@ public class Controller implements IController {
           action = new addStockToPortfolio(operation, view);
           action.go();
           flag = false;
+          view.showMenu();
           menuOption = in.nextInt();
           break;
         case 3:
-
+          action = new showExistingPortfolios(operation, view);
+          action.go();
+          flag = false;
+          view.showMenu();
+          menuOption = in.nextInt();
           break;
         case 4:
-
+          action = new showAmountOfPortfolioByDate(operation, view);
+          action.go();
+          flag = false;
+          view.showMenu();
+          menuOption = in.nextInt();
           break;
         case 5:
 
@@ -54,7 +66,7 @@ public class Controller implements IController {
 
           break;
         case 7:
-
+          flag=true;
           break;
         default:
           System.out.println("Invalid Response. ");

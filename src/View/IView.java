@@ -26,6 +26,7 @@ public interface IView {
 
   void showCurrentPrice(double text);
   void showOrderCancelled();
+  void showOrderCompleted();
   void showMenuMessage();
   void showPortfolioNames(Set<String> set);
   void showEnterPortfolioToAddStocks();

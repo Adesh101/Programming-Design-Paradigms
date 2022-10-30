@@ -51,12 +51,14 @@ public class View implements IView {
   @Override
   public void showMenu(){
     out.println("1. Create new portfolio");
-    out.println("2. View existing portfolios"); // all portfolio names
-    out.println("3. View stocks held in the portfolio"); // portflio name from user
-    out.println("4. View invested amount of specific portfolio");
-    out.println("5. View current amount of specific portfolio");
-    out.println("6. View amount of specific portfolio by date");
-    out.println("7. View transaction history");
+    out.println("2. Add stocks to newly created portfolio"); // all portfolio names
+    out.println("3. View all portfolio names");
+//    out.println("3. View stocks held in the portfolio"); // portflio name from user
+//    out.println("4. View invested amount of specific portfolio");
+//    out.println("5. View current amount of specific portfolio");
+//    out.println("6. View amount of specific portfolio by date");
+    out.println("7. Quit");
+    out.println("Enter valid choice");
   }
   // Create New Portfolio
   @Override
@@ -110,6 +112,10 @@ public class View implements IView {
     out.println("Order cancelled!");
     out.println("Going back to the main menu");
     clearScreen();
+  }
+  @Override
+  public void showOrderCompleted(){
+    out.println("Order Completed.");
   }
 
   @Override

@@ -24,5 +24,5 @@ public interface IPortfolio {
 
   public void lockPortfolio();
 
-  public Set<String> getPortfolioNames();
+  public ArrayList<String> getPortfolioNames();
 }
