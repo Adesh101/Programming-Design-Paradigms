@@ -31,14 +31,38 @@ public class Controller implements IController {
   public void go() {
     view.showMenu();
     int menuOption = in2.nextInt();
-    switch (menuOption) {
-      case 1:
-        action.go();
-        break;
-      case 2:
+    boolean flag=false;
+    while(!flag) {
+      flag=true;
+      switch (menuOption) {
+        case 1:
+          action.go();
+          break;
+        case 2:
 
+          break;
+        case 3:
+
+          break;
+        case 4:
+
+          break;
+        case 5:
+
+          break;
+        case 6:
+
+          break;
+        case 7:
+
+          break;
+        default:
+          System.out.println("Invalid Response. ");
+          flag=false;
+          menuOption= in2.nextInt();
+      }
     }
-    action.go();
+    //action.go();
 
   }
 }
