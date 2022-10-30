@@ -7,10 +7,13 @@ import java.util.Set;
 
 public interface IPortfolio {
   void fetchStockPrice(String ticker);
-  void setPortfolioName(String ticker);
-  void addStocksToPortfolio(String ticker, int quantity, double price);
+  Portfolio setPortfolioName(String ticker);
+  String getPortfolioName();
+  void addStocksToPortfolio(String portfolioName, String ticker, int quantity, double price);
 
-  HashMap<String, List<String>> getPortfolioComposition();
+  Set<String> portfolioNames ();
+
+  HashMap<String, List<String>> getPortfolioComposition(String portfolioName);
   double totalPortfolioValue();
   void createPortfolio();
 //  void setNewPortfolioName(String name);

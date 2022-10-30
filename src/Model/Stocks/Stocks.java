@@ -3,31 +3,20 @@ package Model.Stocks;
 public class Stocks implements IStocks{
 
   String[] stockData;
+  fetchStockData data;
 
   public Stocks(String ticker){
-    this.stockData = data.callStockAPI(ticker);
+    this.stockData = new String[50]; //null;data.callStockAPI(ticker);
   }
-
-  fetchStockData data = new fetchStockData();
-
-//  @Override
-//  public void setStock(String ticker){
-//      Stocks stock = new Stocks(ticker);
-//  }
-
 
   @Override
   public String[] callStockAPI(String ticker) {
     this.stockData = data.callStockAPI(ticker);
     return this.stockData;
   }
-//  @Override
-//  public String[] getAllStocks(){
-//    return "";
-//  }
 
   @Override
-  public double getStockCurrentPrice() {
+  public double getStockCurrentPrice(String ticker) {
     return Double.parseDouble(this.stockData[13]);
   }
   @Override

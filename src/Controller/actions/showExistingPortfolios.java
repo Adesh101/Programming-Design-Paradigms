@@ -1,19 +1,25 @@
 package Controller.actions;
 
 import Model.Portfolio.IPortfolio;
+import Model.Stocks.IStocks;
+import View.IView;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class showExistingPortfolios implements IActions {
-  private IPortfolio portfolio;
   private Scanner in;
-  public showExistingPortfolios(IPortfolio portfolio, InputStream in){
+  private IView view;
+  private IPortfolio portfolio;
+
+  public showExistingPortfolios(IPortfolio portfolio, IView view, InputStream in){
     this.portfolio = portfolio;
-    this.in= new Scanner(System.in);
+    this.view = view;
+    this.in = new Scanner(System.in);
   }
 
   @Override
-  public void go() {
-    portfolio.getPortfolioNames();
+  public String go() {
+    view.showPortfolioNames(portfolio.portfolioNames());
+    return null;
   }
 }

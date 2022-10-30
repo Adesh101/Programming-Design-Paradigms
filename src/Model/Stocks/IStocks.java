@@ -4,6 +4,6 @@ public interface IStocks {
 
   String[] callStockAPI(String ticker);
   String[] getStockData();
-  double getStockCurrentPrice();
+  double getStockCurrentPrice(String ticker);
   String getCurrentDate(String date);
 }

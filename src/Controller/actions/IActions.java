@@ -2,6 +2,6 @@ package Controller.actions;
 
 public interface IActions {
 
-  void go();
+  String go();
 
 }

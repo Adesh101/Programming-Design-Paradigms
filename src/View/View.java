@@ -1,8 +1,10 @@
 package View;
 
+import Model.Portfolio.Portfolio;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class View implements IView {
 
@@ -111,7 +113,28 @@ public class View implements IView {
   }
 
   @Override
-  public void showStockPortfolio(HashMap<String, List<String>> map, double value) {
+  public void showMenuMessage() {
+    out.println("Portfolio locked!");
+    out.println("Going to the main menu.");
+  }
+
+  @Override
+  public void showPortfolioNames(Set<String> set) {
+    System.out.println(set);
+  }
+
+  @Override
+  public void showEnterPortfolioToAddStocks() {
+    out.println("Enter portfolio name to add stocks!");
+  }
+
+  @Override
+  public void showValidPortfolio() {
+    out.println("Portfolio found!");
+  }
+
+  @Override
+  public void showStockPortfolio(HashMap<String, List<String>> map) {
     System.out.println("Your portfolio composition is: ");
     System.out.println("Ticker : Buy Price : Quantity : Current Value");
     for (String string : map.keySet()) {
@@ -121,7 +144,7 @@ public class View implements IView {
       String currentValue = map.get(string).get(2);
       System.out.println(ticker + " : " + price + " : " + quantity + " : " + currentValue);
     }
-    System.out.println("Your total portfolio value is : " + value);
+    //System.out.println("Your total portfolio value is : " + value);
   }
 
   @Override

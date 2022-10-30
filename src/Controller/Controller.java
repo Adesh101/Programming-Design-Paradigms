@@ -1,46 +1,45 @@
 package Controller;
 
 import Controller.actions.IActions;
-import Controller.actions.showExistingPortfolios;
-import Model.Portfolio.IPortfolio;
-import Model.Stocks.IStocks;
-import Model.User.IUser;
+import Controller.actions.addStockToPortfolio;
+import Model.Operation.IOperation;
 import View.IView;
-import java.io.InputStream;
 import java.util.Scanner;
+import Controller.actions.createNewPortfolio;
 
 public class Controller implements IController {
-
-  private InputStream in;
-  private Scanner in2;
-  private IUser user;
+  private IOperation operation;
   private IView view;
   private IActions action;
-  private IPortfolio p;
-  private IStocks stock;
+  private Scanner in;
 
-  public Controller(IView view, InputStream in, IStocks stock, IPortfolio p, IActions action){
-    //this.user = user;
-    this.p = p;
-    this.stock = stock;
+  public Controller(IOperation operation, IView view) throws IllegalArgumentException {
+    if(operation == null || view == null)
+      throw new IllegalArgumentException();
+    this.operation = operation;
     this.view = view;
-    this.action=action;
-    this.in2 = new Scanner(in);
+    this.in = new Scanner(System.in);
   }
 
   @Override
   public void go() {
     view.showMenu();
-    int menuOption = in2.nextInt();
+    int menuOption = in.nextInt();
     boolean flag=false;
     while(!flag) {
       flag=true;
       switch (menuOption) {
         case 1:
+          action = new createNewPortfolio(operation, view);
           action.go();
+          menuOption = in.nextInt();
+          flag = false;
           break;
         case 2:
-          new showExistingPortfolios(p,in);
+          action = new addStockToPortfolio(operation, view);
+          action.go();
+          flag = false;
+          menuOption = in.nextInt();
           break;
         case 3:
 
@@ -60,7 +59,7 @@ public class Controller implements IController {
         default:
           System.out.println("Invalid Response. ");
           flag=false;
-          menuOption= in2.nextInt();
+          menuOption= in.nextInt();
       }
     }
     //action.go();

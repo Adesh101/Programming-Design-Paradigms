@@ -3,7 +3,7 @@ package Controller.actions;
 public class showAmountOfPortfolioByDate implements IActions {
 
   @Override
-  public void go() {
-
+  public String go() {
+    return null;
   }
 }
