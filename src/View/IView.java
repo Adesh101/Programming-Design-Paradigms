@@ -18,10 +18,12 @@ public interface IView {
   void showOrderConfirmationDeclined();
   void showPostConfirmation();
   void showQuit();
+  void clearScreen();
 
   void showStockMenu();
 
   void showCurrentPrice(double text);
+  void showOrderCancelled();
 
   void showStockPortfolio(HashMap<String, List<String>> map, double value);
 

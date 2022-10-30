@@ -10,6 +10,12 @@ public class Stocks implements IStocks{
 
   fetchStockData data = new fetchStockData();
 
+//  @Override
+//  public void setStock(String ticker){
+//      Stocks stock = new Stocks(ticker);
+//  }
+
+
   @Override
   public String[] callStockAPI(String ticker) {
     this.stockData = data.callStockAPI(ticker);
@@ -21,7 +27,7 @@ public class Stocks implements IStocks{
 //  }
 
   @Override
-  public double getStockCurrentPrice(String ticker) {
+  public double getStockCurrentPrice() {
     return Double.parseDouble(this.stockData[13]);
   }
   @Override

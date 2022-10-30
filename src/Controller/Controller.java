@@ -5,7 +5,6 @@ import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
 import Model.User.IUser;
 import View.IView;
-import Controller.actions.createPortfolio;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -28,11 +27,17 @@ public class Controller implements IController {
     this.in2 = new Scanner(in);
   }
 
-  //private createPortfolio cP = new createPortfolio(p, view, stock, in);
-
-
   @Override
   public void go() {
+    view.showMenu();
+    int menuOption = in2.nextInt();
+    switch (menuOption) {
+      case 1:
+        action.go();
+        break;
+      case 2:
+
+    }
     action.go();
 
   }

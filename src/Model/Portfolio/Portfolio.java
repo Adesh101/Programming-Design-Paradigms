@@ -9,14 +9,12 @@ import java.util.Scanner;
 public class Portfolio implements IPortfolio{
 
   private String name;
-  private HashMap<String, List<String>> stocks = new HashMap<String, List<String>>();
+  private HashMap<String, HashMap<String, List<String>>> portfolios = new HashMap<String, HashMap<String, List<String>>>();
   private double totalValue;
-  private ArrayList<String> portfolioNames = new ArrayList<String>();
 
   public Portfolio(String name){
-      this.name = name;
+    this.name = name;
     this.totalValue = 0;
-    this.portfolioNames.add(name);
   }
 
   private Scanner in = new Scanner(System.in);
@@ -47,27 +45,37 @@ public class Portfolio implements IPortfolio{
   }
 
   @Override
+  public void setPortfolioName(String ticker) {
+    Portfolio portfolio = new Portfolio(ticker);
+  }
+
+  @Override
   public void addStocksToPortfolio(String ticker, int quantity, double price) {
-    if(stocks.containsKey(ticker)){
-      double existingPrice = Double.parseDouble(stocks.get(ticker).get(0));
-      stocks.get(ticker).set(0, String.valueOf((existingPrice+price)/2));
-      int existingNoOfStocks = Integer.parseInt(stocks.get(ticker).get(1));
-      stocks.get(ticker).set(1, String.valueOf(existingNoOfStocks+quantity));
-      double existingTotalStockValue = Double.parseDouble(stocks.get(ticker).get(2));
-      stocks.get(ticker).set(2, String.valueOf(existingTotalStockValue + (quantity*price)));
-      this.totalValue = totalValue + (quantity*price);
+    if(portfolios.containsKey(this.name)){
+      if(portfolios.get(this.name).containsKey(ticker)){
+        double existingPrice = Double.parseDouble(portfolios.get(this.name).get(ticker).get(0));
+        //Recheck existingPrice+price
+        portfolios.get(this.name).get(ticker).set(0, String.valueOf((existingPrice+price)/2));
+        int existingNoOfStocks = Integer.parseInt(portfolios.get(this.name).get(ticker).get(1));
+        portfolios.get(this.name).get(ticker).set(1, String.valueOf(existingNoOfStocks+quantity));
+        double existingTotalStockValue = Double.parseDouble(portfolios.get(this.name).get(ticker).get(2));
+        portfolios.get(this.name).get(ticker).set(2, String.valueOf(existingTotalStockValue + (quantity*price)));
+        this.totalValue = totalValue + (quantity*price);
+      } else {
+        portfolios.get(this.name).put(ticker, new ArrayList<String>());
+        portfolios.get(this.name).get(ticker).add(String.valueOf(price));
+        portfolios.get(this.name).get(ticker).add(String.valueOf(quantity));
+        portfolios.get(this.name).get(ticker).add(String.valueOf(quantity*price));
+        this.totalValue = totalValue + (quantity*price);
+      }
     } else {
-      stocks.put(ticker, new ArrayList<String>());
-      stocks.get(ticker).add(String.valueOf(price));
-      stocks.get(ticker).add(String.valueOf(quantity));
-      stocks.get(ticker).add(String.valueOf(quantity*price));
-      this.totalValue = totalValue + (quantity*price);
+      portfolios.put(this.name, new HashMap<String, List<String>>());
     }
   }
 
   @Override
   public HashMap<String, List<String>> getPortfolioComposition() {
-    return this.stocks;
+    return this.portfolios.get(this.name);
   }
 
   @Override

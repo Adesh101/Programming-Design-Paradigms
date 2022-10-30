@@ -12,6 +12,11 @@ public class View implements IView {
     this.out = out;
   }
 
+  public void clearScreen() {
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+  }
+
   @Override
   public void showWelcomeMessage() {
     out.println("Welcome! Enter the number denoting the operation to be performed:");
@@ -44,8 +49,8 @@ public class View implements IView {
   @Override
   public void showMenu(){
     out.println("1. Create new portfolio");
-    out.println("2. View existing portfolios");
-    out.println("3. View stocks held in the portfolio");
+    out.println("2. View existing portfolios"); // all portfolio names
+    out.println("3. View stocks held in the portfolio"); // portflio name from user
     out.println("4. View invested amount of specific portfolio");
     out.println("5. View current amount of specific portfolio");
     out.println("6. View amount of specific portfolio by date");
@@ -96,6 +101,13 @@ public class View implements IView {
   public void showCurrentPrice(double text) {
     out.println("The price of the current stock is : "+text);
     out.println("Are you sure you wish to proceed with the transaction?(Y/N)");
+  }
+
+  @Override
+  public void showOrderCancelled() {
+    out.println("Order cancelled!");
+    out.println("Going back to the main menu");
+    clearScreen();
   }
 
   @Override

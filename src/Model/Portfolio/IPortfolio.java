@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface IPortfolio {
   void fetchStockPrice(String ticker);
+  void setPortfolioName(String ticker);
   void addStocksToPortfolio(String ticker, int quantity, double price);
 
   HashMap<String, List<String>> getPortfolioComposition();
