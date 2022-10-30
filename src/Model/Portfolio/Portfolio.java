@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Portfolio implements IPortfolio{
 
@@ -32,6 +33,12 @@ public class Portfolio implements IPortfolio{
   @Override
   public String getOrderConfirmation(String choice) {
     return null;
+  }
+
+  @Override
+  public HashMap<String, HashMap<String, List<String>>> getPortfolio() {
+    System.out.println(portfolios);
+    return portfolios;
   }
 
 //  @Override
@@ -97,7 +104,15 @@ public class Portfolio implements IPortfolio{
   }
 
   @Override
-  public void getPortfolio() {
+  public Set<String> getPortfolioNames() {
+//    ArrayList<String> names= new ArrayList<String>();
+//    for(String s : portfolios.keySet()){
+//      System.out.println(s);
+//      names.add(s);
+//    }
+    System.out.println(portfolios);
+    return portfolios.keySet();
+
 
   }
 }

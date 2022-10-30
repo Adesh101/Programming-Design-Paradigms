@@ -26,7 +26,7 @@ public class createNewPortfolio implements IActions {
     String portfolioName = in.nextLine();
     portfolio.setPortfolioName(portfolioName);
     String flag = "";
-    while(!flag.equals("N")){
+    while(!flag.equalsIgnoreCase("N")){
       view.showTicker();
       // check valid ticker
       String tickerSymbol = in.next();
@@ -34,15 +34,19 @@ public class createNewPortfolio implements IActions {
       double currentPrice = stock.getStockCurrentPrice();
       view.showCurrentPrice(currentPrice);
       String getConfirmation = in.next();
-      if(getConfirmation.equals("Y")){
+      if(getConfirmation.equalsIgnoreCase("Y")){
         view.showQuantity();
         int quantity = in.nextInt();
         portfolio.addStocksToPortfolio(tickerSymbol, quantity, currentPrice);
         view.showPostConfirmation();
+        // delete later
+        //portfolio.getPortfolioNames();
+
       } else {
         view.showOrderCancelled();
         view.showMenu();
       }
+      portfolio.getPortfolio();
       flag = in.next();
     }
   }

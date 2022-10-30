@@ -1,7 +1,9 @@
 package Model.Portfolio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface IPortfolio {
   void fetchStockPrice(String ticker);
@@ -15,9 +17,9 @@ public interface IPortfolio {
   void getTicker();
   void getQuantity();
   String getOrderConfirmation(String choice);
-
+  HashMap<String, HashMap<String, List<String>>> getPortfolio();
 
   public void lockPortfolio();
 
-  public void getPortfolio();
+  public Set<String> getPortfolioNames();
 }

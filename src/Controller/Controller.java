@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.actions.IActions;
+import Controller.actions.showExistingPortfolios;
 import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
 import Model.User.IUser;
@@ -39,7 +40,7 @@ public class Controller implements IController {
           action.go();
           break;
         case 2:
-
+          new showExistingPortfolios(p,in);
           break;
         case 3:
 
