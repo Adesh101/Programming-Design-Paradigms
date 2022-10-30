@@ -16,7 +16,7 @@ public interface IView {
   void showEnterNewPortfolioName();
   void showTicker();
   void showQuantity();
-  void showConfirmation();
+  void showConfirmation(double price);
   void showOrderConfirmationDeclined();
   void showPostConfirmation();
   void showQuit();

@@ -14,7 +14,7 @@ public class Operation implements IOperation {
   protected IStocks stocks;
   protected IPortfolio portfolio;
 
-  public Operation() {
+  public Operation(IStocks stocks, IPortfolio portfolio) {
     this.portfolioName = "";
     this.totalValue = 0;
     this.portfolio = portfolio;
@@ -65,6 +65,11 @@ public class Operation implements IOperation {
   @Override
   public double getCurrentPrice(String ticker) {
     return stocks.getStockCurrentPrice(ticker);
+  }
+
+  @Override
+  public void callStockAPIHelper(String ticker) {
+    stocks.callStockAPI(ticker);
   }
 
   @Override

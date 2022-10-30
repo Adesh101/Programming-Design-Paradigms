@@ -28,8 +28,9 @@ public class addStockToPortfolio implements IActions {
       while(orderConfirmation.equalsIgnoreCase("Y")) {
         view.showTicker();
         String ticker = in.next().toUpperCase();
+        operation.callStockAPIHelper(ticker);
         double price = operation.getCurrentPrice(ticker);
-        view.showConfirmation();
+        view.showConfirmation(price);
         view.showQuantity();
         int quantity = in.nextInt();
         operation.addStockToPortfolio(portfolioName, ticker, quantity, price);

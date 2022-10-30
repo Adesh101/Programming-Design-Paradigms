@@ -7,6 +7,8 @@ public interface IOperation {
   boolean getPortfolio(String name);
   void getExistingPortfolios();
   double getCurrentPrice(String ticker);
+
+  void callStockAPIHelper(String ticker);
   void getCurrentPriceByDate(String ticker, String date);
   //void getStocksInPortfolios();
   void getPortfolioComposition();

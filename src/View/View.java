@@ -72,8 +72,8 @@ public class View implements IView {
     out.println("Enter quantity of the stock you want to buy.");
   }
   @Override
-  public void showConfirmation(){
-    out.println("The current price of the stock is"); // getprice from stocks
+  public void showConfirmation(double price){
+    out.println("The current price of the stock is: "+price); // getprice from stocks
     out.println("Are you sure you want to proceed with the transaction?(Y/N)");
   }
   @Override
