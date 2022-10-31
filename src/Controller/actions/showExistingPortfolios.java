@@ -21,6 +21,8 @@ public class showExistingPortfolios implements IActions {
   @Override
   public String go() {
     //view.showPortfolioNames(portfolio.portfolioNames());
-    return operation.getExistingPortfolios();
+
+    view.showPortfolioNames(operation.getExistingPortfolios());
+  return null;
   }
 }

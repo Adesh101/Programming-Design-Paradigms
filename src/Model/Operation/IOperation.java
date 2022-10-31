@@ -5,7 +5,7 @@ public interface IOperation {
   String createNewPortfolio(String portfolioName);
   void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price);
   boolean getPortfolio(String name);
-  String getExistingPortfolios();
+  String[] getExistingPortfolios();
   double getCurrentPrice(String ticker);
 
   void callStockAPIHelper(String ticker);

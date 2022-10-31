@@ -2,7 +2,6 @@ package Model.Operation;
 
 import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
-import Model.Stocks.Stocks;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,9 +57,15 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public String getExistingPortfolios() {
+  public String[] getExistingPortfolios() {
     //return portfolio.getPortfolioNames().toString();
-    return portfolios.keySet().toString();
+    String[] names = new String[portfolios.size()];
+    int i =0;
+    for ( String key : portfolios.keySet() ) {
+      names[i]=key;
+      i++;
+    }
+    return names;
   }
 
   @Override

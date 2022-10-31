@@ -1,7 +1,7 @@
 package View;
 
-import Model.Portfolio.Portfolio;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -125,8 +125,10 @@ public class View implements IView {
   }
 
   @Override
-  public void showPortfolioNames(Set<String> set) {
-    System.out.println(set);
+  public void showPortfolioNames(String[] names) {
+    for(int i=0;i<names.length;i++){
+      out.println(i+1 + " " + names[i]);
+    }
   }
 
   @Override
@@ -151,6 +153,11 @@ public class View implements IView {
       System.out.println(ticker + " : " + price + " : " + quantity + " : " + currentValue);
     }
     //System.out.println("Your total portfolio value is : " + value);
+  }
+  @Override
+  public void showAllPortfolioNames(String names){
+    out.println(names);
+
   }
 
   @Override

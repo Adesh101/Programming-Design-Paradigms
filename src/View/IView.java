@@ -1,6 +1,5 @@
 package View;
 
-import Model.Portfolio.Portfolio;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -28,9 +27,10 @@ public interface IView {
   void showOrderCancelled();
   void showOrderCompleted();
   void showMenuMessage();
-  void showPortfolioNames(Set<String> set);
+  void showPortfolioNames(String[] names);
   void showEnterPortfolioToAddStocks();
   void showValidPortfolio();
+  void showAllPortfolioNames(String names);
 
   void showStockPortfolio(HashMap<String, List<String>> map);
 
