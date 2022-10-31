@@ -49,7 +49,6 @@ public class addStockToPortfolio implements IActions {
           view.showOrderCompleted();
           orderConfirmation="N";
         }
-
       }
       if(orderConfirmation.equalsIgnoreCase("N")) {
         view.showOrderCancelled();

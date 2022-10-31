@@ -79,6 +79,18 @@ public class Operation implements IOperation {
   }
 
   @Override
+  public double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date) {
+    double currentValue = 0;
+    for (String string: map.keySet()) {
+      stocks.callStockAPIByDate(string, date);
+      double tempValue = stocks.getStockCurrentPriceByDate(string);
+      tempValue *= Double.parseDouble(map.get(string).get(0));
+      currentValue += tempValue;
+    }
+    return currentValue;
+  }
+
+  @Override
   public void getAmountByDate(String Date) {
 
   }
@@ -94,8 +106,15 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public void getPortfolioByDate(String date) {
-
+  public double getPortfolioByDate(String portfolioName, String date) {
+    HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+    double totalValueByDate = 0;
+    for (String string: this.portfolios.get(portfolioName).keySet()) {
+      map.put(string, new ArrayList<>());
+      map.get(string).add(portfolios.get(portfolioName).get(string).get(1));
+    }
+    double finalValue = callStockAPIByDateHelper(map, date);
+    return finalValue;
   }
 
   @Override

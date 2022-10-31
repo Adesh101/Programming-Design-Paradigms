@@ -52,7 +52,7 @@ public class View implements IView {
   public void showMenu(){
     out.println("1. Create new portfolio");
     out.println("2. Add stocks to newly created portfolio"); // all portfolio names
-    out.println("3. View all portfolio names");
+    out.println("3. View all portfolio names");out.println("4. View amount by date");
 //    out.println("3. View stocks held in the portfolio"); // portflio name from user
 //    out.println("4. View invested amount of specific portfolio");
 //    out.println("5. View current amount of specific portfolio");
@@ -139,6 +139,11 @@ public class View implements IView {
   @Override
   public void showValidPortfolio() {
     out.println("Portfolio found!");
+  }
+
+  @Override
+  public void showPortfolioByDateMessage() {
+    out.println("Enter portfolio name : ");
   }
 
   @Override

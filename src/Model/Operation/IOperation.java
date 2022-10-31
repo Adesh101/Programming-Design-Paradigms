@@ -1,5 +1,8 @@
 package Model.Operation;
 
+import java.util.HashMap;
+import java.util.List;
+
 public interface IOperation {
 
   String createNewPortfolio(String portfolioName);
@@ -9,12 +12,14 @@ public interface IOperation {
   double getCurrentPrice(String ticker);
 
   void callStockAPIHelper(String ticker);
+  double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date);
+
   void getAmountByDate(String Date);
   void getCurrentPriceByDate(String ticker, String date);
   //void getStocksInPortfolios();
   void getPortfolioComposition();
   //void getCurrentAmountOfPortfolio();
-  void getPortfolioByDate(String date);
+  double getPortfolioByDate(String portfolioName, String date);
   //void getTransactionHistory();
   void quit();
 }

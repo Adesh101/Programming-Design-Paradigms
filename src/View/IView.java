@@ -30,6 +30,7 @@ public interface IView {
   void showPortfolioNames(String[] names);
   void showEnterPortfolioToAddStocks();
   void showValidPortfolio();
+  void showPortfolioByDateMessage();
   void showAllPortfolioNames(String names);
 
   void showStockPortfolio(HashMap<String, List<String>> map);

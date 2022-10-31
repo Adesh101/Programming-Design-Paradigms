@@ -16,6 +16,15 @@ public class showAmountOfPortfolioByDate implements IActions {
 
   @Override
   public String go() {
-    return null;
+    view.showPortfolioByDateMessage();
+    String portfolioName = in.nextLine();
+    if(operation.getPortfolio(portfolioName)) {
+      view.showValidPortfolio();
+      System.out.println("Enter the date at which you want to see portfolio value:");
+      String date = in.nextLine();
+      double value = operation.getPortfolioByDate(portfolioName, date);
+      System.out.println("Total portfolio value: " + value);
+    }
+    return "Hello";
   }
 }
