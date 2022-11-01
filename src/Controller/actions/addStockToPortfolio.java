@@ -45,13 +45,7 @@ public class addStockToPortfolio implements IActions {
             view.showTicker();
             String ticker = in.next().toUpperCase();
             //String[] stockData = operation.callStockAPIHelper(ticker);
-//            while(true) {
-//                if (!operation.isTickerValid(ticker)) {
-//                  view.showTickerError();
-//                  ticker = in.next().toUpperCase();
-//                }
-//                break;
-//              }
+//
             while(true) {
               try {
                 if (!operation.isTickerValid(ticker)) {
@@ -72,13 +66,6 @@ public class addStockToPortfolio implements IActions {
             if (orderConfirmation.equalsIgnoreCase("Y")) {
               view.showQuantity();
               String quantity = in.next();
-//              while(true) {
-//                if (!operation.isQuantityValid(ticker)) {
-//                  view.showValidQuantity();
-//                  quantity = in.next();
-//                }
-//                break;
-//              }
               while(true) {
                 try {
                   if (!operation.isQuantityValid(quantity)) {
