@@ -31,6 +31,7 @@ public class Operation implements IOperation {
 
   @Override
   public void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price) {
+
       if(portfolios.get(portfolioName).containsKey(ticker)){
         double existingPrice = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(0));
         //Recheck existingPrice+price
@@ -52,8 +53,14 @@ public class Operation implements IOperation {
   @Override
   public boolean getPortfolio(String name) {
     if(!portfolios.containsKey(name))
-      throw new IllegalArgumentException("Enter correct portfolio name!");
+      return false;
     return true;
+  }
+  @Override
+  public boolean checkPortfolioAlreadyExists(String name){
+    if(portfolios.containsKey(name))
+      return true;
+    return false;
   }
 
   @Override
@@ -77,6 +84,13 @@ public class Operation implements IOperation {
   public void callStockAPIHelper(String ticker) {
     stocks.callStockAPI(ticker);
   }
+  @Override
+  public boolean isTickerValid(String ticker){
+//    if(stocks.getStockData(0).isEmpty())
+    if(stocks.getStockCurrentPriceByDate(ticker)==0)
+      return false;
+    return true;
+  }
 
   @Override
   public double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date) {
@@ -99,11 +113,49 @@ public class Operation implements IOperation {
   public void getCurrentPriceByDate(String ticker, String date) {
 
   }
+  @Override
+  public String[][] getStocksMap(String name){
+    HashMap<String, List<String>> stocksMap=new HashMap<String, List<String>>();
+    stocksMap=this.portfolios.get(name);
+    String[][] composition = new String[stocksMap.size()][4];
+    int i=0;
+    for(String string : stocksMap.keySet()){
+      int j=0;
+      composition[i][j] = string.toString();
+      composition[i][++j] = stocksMap.get(string).get(0);
+      composition[i][++j] = stocksMap.get(string).get(1);
+      composition[i][++j] = stocksMap.get(string).get(2);
+      i++;
+    }
+    return composition;
+  }
 
   @Override
-  public void getPortfolioComposition() {
-
+  public int getMapSize(String portfolioName) {
+    return this.portfolios.get(portfolioName).size();
   }
+
+//  @Override
+//  public String[] getPortfolioComposition(String portfolioName) {
+//    String[] composition = new String[4*this.portfolios.get(portfolioName).size()];
+////    return this.portfolios.get(portfolioName);
+////    for (String string: this.portfolios.get(portfolioName).keySet()){
+////      String ticker = string.toString();
+////      String price = this.portfolios.get(portfolioName).get(string).get(0);
+////      String quantity = this.portfolios.get(portfolioName).get(string).get(1);
+////      String currentValue = this.portfolios.get(portfolioName).get(string).get(2);
+////    }
+//   int i=0;
+//    for (String string: this.portfolios.get(portfolioName).keySet()){
+//      composition[i] = string.toString();
+//      //String ticker = string.toString(); // ticker
+//      composition[i+1] = this.portfolios.get(portfolioName).get(string).get(0); // price
+//      composition[i+2] = this.portfolios.get(portfolioName).get(string).get(1); //quantity
+//      composition[i+3] = this.portfolios.get(portfolioName).get(string).get(2); //currentValue
+//    i++;
+//    }
+//    return composition;
+//  }
 
   @Override
   public double getPortfolioByDate(String portfolioName, String date) {

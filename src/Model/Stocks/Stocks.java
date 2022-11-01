@@ -32,8 +32,8 @@ public class Stocks implements IStocks{
   }
 
   @Override
-  public String[] getStockData(){
-    return this.stockData;
+  public String getStockData(int i){
+    return this.stockData[i];
   }
 
   @Override

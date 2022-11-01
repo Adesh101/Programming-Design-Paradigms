@@ -9,7 +9,11 @@ public interface IOperation {
   void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price);
   boolean getPortfolio(String name);
   String[] getExistingPortfolios();
+  String[][] getStocksMap(String name);
+  int getMapSize(String portfolioName);
   double getCurrentPrice(String ticker);
+  boolean checkPortfolioAlreadyExists(String name);
+  boolean isTickerValid(String ticker);
 
   void callStockAPIHelper(String ticker);
   double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date);
@@ -17,7 +21,7 @@ public interface IOperation {
   void getAmountByDate(String Date);
   void getCurrentPriceByDate(String ticker, String date);
   //void getStocksInPortfolios();
-  void getPortfolioComposition();
+  //String[] getPortfolioComposition(String portfolioName);
   //void getCurrentAmountOfPortfolio();
   double getPortfolioByDate(String portfolioName, String date);
   //void getTransactionHistory();

@@ -16,7 +16,7 @@ public class showAmountOfPortfolioByDate implements IActions {
 
   @Override
   public String go() {
-    view.showPortfolioByDateMessage();
+    view.showPortfolioMessage();
     String portfolioName = in.nextLine();
     if(operation.getPortfolio(portfolioName)) {
       view.showValidPortfolio();

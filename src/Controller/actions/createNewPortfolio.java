@@ -20,40 +20,16 @@ public class createNewPortfolio implements IActions {
 
   @Override
   public String go() {
+
     view.showEnterNewPortfolioName();
     this.portfolioName = in.nextLine();
-    return "Portfolio: " + operation.createNewPortfolio(portfolioName) + "created successfully!";
+    if(operation.checkPortfolioAlreadyExists(portfolioName)){
+      view.showPortfolioExists();
+    return "";
+    }
+    operation.createNewPortfolio(portfolioName);
+    view.showPortfolioCreatedSuccessfully(portfolioName);
+    return "";
   }
 
-//  @Override
-//  public void go() {
-//    view.showEnterNewPortfolioName();
-//    String portfolioName = in.nextLine();
-//    portfolio = portfolio.setPortfolioName(portfolioName);
-//    String flag = "";
-//    while(!flag.equalsIgnoreCase("N")){
-//      view.showTicker();
-//      // check valid ticker
-//      String tickerSymbol = in.next();
-//      Stocks stock = new Stocks(tickerSymbol);
-//      double currentPrice = stock.getStockCurrentPrice();
-//      view.showCurrentPrice(currentPrice);
-//      String getConfirmation = in.next();
-//      if(getConfirmation.equalsIgnoreCase("Y")){
-//        view.showQuantity();
-//        int quantity = in.nextInt();
-//        portfolio.addStocksToPortfolio(portfolioName, tickerSymbol, quantity, currentPrice);
-//        view.showPostConfirmation();
-//      } else {
-//        view.showOrderCancelled();
-//        view.showMenu();
-//      }
-//      flag = in.next();
-//    }
-////    Portfolio p = new
-////        Portfolio("ABCD");
-//    view.showStockPortfolio(portfolio.getPortfolioComposition(portfolioName));
-//    view.showMenuMessage();
-//    view.showMenu();
-//  }
 }

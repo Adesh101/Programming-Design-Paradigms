@@ -1,10 +1,7 @@
 package View;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+
 
 public class View implements IView {
 
@@ -24,26 +21,6 @@ public class View implements IView {
     out.println("Welcome! Enter the number denoting the operation to be performed:");
   }
 
-//  @Override
-//  public void showFirstName() {
-//    out.println("Enter first name:");
-//  }
-//
-//  @Override
-//  public void showLastName() {
-//    out.println("Enter last name:");
-//  }
-//
-//  @Override
-//  public void showAccountID() {
-//    out.println("Enter account id:");
-//  }
-//
-//  @Override
-//  public void showInitialBalance() {
-//    out.println("Enter initial balance:");
-//  }
-
   @Override
   public void showError() {
     out.println("Enter valid input");
@@ -51,16 +28,13 @@ public class View implements IView {
   @Override
   public void showMenu(){
     out.println("1. Create new portfolio");
-    out.println("2. Add stocks to newly created portfolio"); // all portfolio names
-    out.println("3. View all portfolio names");out.println("4. View amount by date");
-//    out.println("3. View stocks held in the portfolio"); // portflio name from user
-//    out.println("4. View invested amount of specific portfolio");
-//    out.println("5. View current amount of specific portfolio");
-//    out.println("6. View amount of specific portfolio by date");
-    out.println("7. Quit");
+    out.println("2. Add stocks to newly created portfolio");
+    out.println("3. View all portfolio names");
+    out.println("4. View amount by date");
+    out.println("5. View Composition of Portfolio");
+    out.println("6. Quit");
     out.println("Enter valid choice");
   }
-  // Create New Portfolio
   @Override
   public void showEnterNewPortfolioName(){
     out.println("Enter a name for the new portfolio");
@@ -75,14 +49,13 @@ public class View implements IView {
   }
   @Override
   public void showConfirmation(double price){
-    out.println("The current price of the stock is: "+price); // getprice from stocks
+    out.println("The current price of the stock is: "+price);
     out.println("Are you sure you want to proceed with the transaction?(Y/N)");
   }
   @Override
   public void showOrderConfirmationDeclined(){
     out.println("Your order was cancelled.");
   }
-
   @Override
   public void showPostConfirmation(){
     out.println("Order placed successfully!");
@@ -117,7 +90,6 @@ public class View implements IView {
   public void showOrderCompleted(){
     out.println("Order Completed.");
   }
-
   @Override
   public void showMenuMessage() {
     out.println("Portfolio locked!");
@@ -142,23 +114,19 @@ public class View implements IView {
   }
 
   @Override
-  public void showPortfolioByDateMessage() {
+  public void showPortfolioMessage() {
     out.println("Enter portfolio name : ");
   }
 
   @Override
-  public void showStockPortfolio(HashMap<String, List<String>> map) {
+  public void showStockPortfolio(String[][] composition) {
     System.out.println("Your portfolio composition is: ");
-    System.out.println("Ticker : Buy Price : Quantity : Current Value");
-    for (String string : map.keySet()) {
-      String ticker = string.toString();
-      String price = map.get(string).get(0);
-      String quantity = map.get(string).get(1);
-      String currentValue = map.get(string).get(2);
-      System.out.println(ticker + " : " + price + " : " + quantity + " : " + currentValue);
+    for(int i=0;i<composition.length;i++){
+      int j=0;
+      System.out.println("Ticker : "+ composition[i][j]+" Buy Price : "+composition[i][++j]+" Quantity : "+composition[i][++j]+" Current Value : "+composition[i][++j]);
     }
-    //System.out.println("Your total portfolio value is : " + value);
   }
+
   @Override
   public void showAllPortfolioNames(String names){
     out.println(names);
@@ -180,13 +148,30 @@ public class View implements IView {
     out.println("Please enter a valid ticker!");
   }
 
-//  @Override
-//  public void showCreateNew() {
-//    out.println("To create new portfolio, Enter 1");
-//  }
-//
-//  @Override
-//  public void showExisting() {
-//    out.println("To manage existing portfolio, Enter 2");
-//  }
+  @Override
+  public void showPortfolioLockedError() {
+    out.println("This portfolio is locked");
+    out.println("Enter unlocked portfolio name or create a new portfolio");
+  }
+
+  @Override
+  public void showFractionalShareError() {
+    out.println("Fractional shares purchase not allowed");
+  }
+
+  @Override
+  public void showPortfolioExists() {
+    out.println("Portfolio already exists");
+  }
+
+  @Override
+  public void showPortfolioCreatedSuccessfully(String name) {
+    out.println("Portfolio "+name+" Created Succesfully");
+  }
+
+  @Override
+  public void showNoPortfoliosPresent() {
+    out.println("No portfolios Found");
+  }
+
 }

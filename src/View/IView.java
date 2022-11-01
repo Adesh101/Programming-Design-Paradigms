@@ -30,14 +30,20 @@ public interface IView {
   void showPortfolioNames(String[] names);
   void showEnterPortfolioToAddStocks();
   void showValidPortfolio();
-  void showPortfolioByDateMessage();
+  void showPortfolioMessage();
   void showAllPortfolioNames(String names);
 
-  void showStockPortfolio(HashMap<String, List<String>> map);
+  void showStockPortfolio(String[][] composition);
 
   void showStockBuy();
   void showStockSell();
   void showTickerError();
+  void showPortfolioLockedError();
+  void showFractionalShareError();
+  void showPortfolioExists();
+  void showPortfolioCreatedSuccessfully(String name);
+  void showNoPortfoliosPresent();
+
 //  void showCreateNew();
 //  void showExisting();
 }

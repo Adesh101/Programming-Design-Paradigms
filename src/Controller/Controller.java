@@ -3,6 +3,7 @@ package Controller;
 import Controller.actions.IActions;
 import Controller.actions.addStockToPortfolio;
 import Controller.actions.showAmountOfPortfolioByDate;
+import Controller.actions.showComposition;
 import Controller.actions.showExistingPortfolios;
 import Model.Operation.IOperation;
 import View.IView;
@@ -39,8 +40,13 @@ public class Controller implements IController {
           flag = false;
           break;
         case 2:
-          action = new addStockToPortfolio(operation, view);
-          action.go();
+          if(operation.getExistingPortfolios().length==0){
+            view.showNoPortfoliosPresent();
+          }
+          else {
+            action = new addStockToPortfolio(operation, view);
+            action.go();
+          }
           flag = false;
           view.showMenu();
           menuOption = in.nextInt();
@@ -60,12 +66,13 @@ public class Controller implements IController {
           menuOption = in.nextInt();
           break;
         case 5:
-
+          action = new showComposition(operation, view);
+          action.go();
+          flag = false;
+          view.showMenu();
+          menuOption = in.nextInt();
           break;
         case 6:
-
-          break;
-        case 7:
           flag=true;
           break;
         default:
