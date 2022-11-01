@@ -39,33 +39,35 @@ public class addStockToPortfolio implements IActions {
         String orderConfirmation = "Y";
         while (orderConfirmation.equalsIgnoreCase("Y")) {
           addStockConfirmation = "Y";
-
           while (orderConfirmation.equalsIgnoreCase("Y") && addStockConfirmation.equalsIgnoreCase(
               "Y")) {
             //copied from above
             view.showTicker();
             String ticker = in.next().toUpperCase();
-            operation.callStockAPIHelper(ticker);
+            //String[] stockData = operation.callStockAPIHelper(ticker);
             while(true) {
-              try {
                 if (!operation.isTickerValid(ticker)) {
-                  throw new IllegalArgumentException();
-                } else {
-                  break;
+                  view.showTickerError();
+                  ticker = in.next().toUpperCase();
                 }
-              } catch (IllegalArgumentException e) {
-                view.showTickerError();
-                ticker = in.next().toUpperCase();
+                break;
               }
-            }
+            operation.callStockAPIHelper(ticker);
             double price = operation.getCurrentPrice(ticker);
             view.showConfirmation(price);
             orderConfirmation = in.next();
             //
             if (orderConfirmation.equalsIgnoreCase("Y")) {
               view.showQuantity();
-              int quantity = in.nextInt();
-              operation.addStockToPortfolio(portfolioName, ticker, quantity, price);
+              String quantity = in.next();
+              while(true) {
+                if (!operation.isTickerValid(ticker)) {
+                  view.showValidQuantity();
+                  quantity = in.next();
+                }
+                break;
+              }
+              operation.addStockToPortfolio(portfolioName, ticker, Integer.parseInt(quantity), price);
               view.showPostConfirmation();
               addStockConfirmation = in.next();
             }

@@ -14,6 +14,7 @@ public interface IOperation {
   double getCurrentPrice(String ticker);
   boolean checkPortfolioAlreadyExists(String name);
   boolean isTickerValid(String ticker);
+  boolean isQuantityValid(String quantity);
 
   void callStockAPIHelper(String ticker);
   double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date);

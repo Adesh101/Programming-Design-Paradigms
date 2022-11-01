@@ -31,6 +31,7 @@ public interface IView {
   void showEnterPortfolioToAddStocks();
   void showValidPortfolio();
   void showPortfolioMessage();
+  void showValidQuantity();
   void showAllPortfolioNames(String names);
 
   void showStockPortfolio(String[][] composition);

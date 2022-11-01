@@ -86,9 +86,19 @@ public class Operation implements IOperation {
   }
   @Override
   public boolean isTickerValid(String ticker){
-//    if(stocks.getStockData(0).isEmpty())
-    if(stocks.getStockCurrentPriceByDate(ticker)==0)
+    String[] stockData = stocks.callStockAPI(ticker);
+    if (stockData.length == 1)
       return false;
+    return true;
+  }
+
+  @Override
+  public boolean isQuantityValid(String quantity) {
+    for (int i = 0; i < quantity.length(); i++) {
+      char ch = quantity.charAt(i);
+      if(!Character.isDigit(ch))
+        return false;
+    }
     return true;
   }
 

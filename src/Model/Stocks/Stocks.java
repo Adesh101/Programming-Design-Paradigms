@@ -11,8 +11,9 @@ public class Stocks implements IStocks{
   }
 
   @Override
-  public void callStockAPI(String ticker) {
+  public String[] callStockAPI(String ticker) {
     this.stockData = data.callStockAPI(ticker);
+    return this.stockData;
   }
 
 

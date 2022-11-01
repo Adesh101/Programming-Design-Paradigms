@@ -119,6 +119,11 @@ public class View implements IView {
   }
 
   @Override
+  public void showValidQuantity() {
+    out.println("Quantity cannot be fractional. Please enter whole numbers!");
+  }
+
+  @Override
   public void showStockPortfolio(String[][] composition) {
     System.out.println("Your portfolio composition is: ");
     for(int i=0;i<composition.length;i++){
