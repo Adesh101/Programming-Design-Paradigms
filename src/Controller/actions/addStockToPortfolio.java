@@ -45,13 +45,25 @@ public class addStockToPortfolio implements IActions {
             view.showTicker();
             String ticker = in.next().toUpperCase();
             //String[] stockData = operation.callStockAPIHelper(ticker);
+//            while(true) {
+//                if (!operation.isTickerValid(ticker)) {
+//                  view.showTickerError();
+//                  ticker = in.next().toUpperCase();
+//                }
+//                break;
+//              }
             while(true) {
+              try {
                 if (!operation.isTickerValid(ticker)) {
-                  view.showTickerError();
-                  ticker = in.next().toUpperCase();
+                  throw new IllegalArgumentException();
+                } else {
+                  break;
                 }
-                break;
+              } catch (IllegalArgumentException e) {
+                view.showTickerError();
+                ticker = in.next().toUpperCase();
               }
+            }
             operation.callStockAPIHelper(ticker);
             double price = operation.getCurrentPrice(ticker);
             view.showConfirmation(price);
@@ -60,12 +72,24 @@ public class addStockToPortfolio implements IActions {
             if (orderConfirmation.equalsIgnoreCase("Y")) {
               view.showQuantity();
               String quantity = in.next();
+//              while(true) {
+//                if (!operation.isQuantityValid(ticker)) {
+//                  view.showValidQuantity();
+//                  quantity = in.next();
+//                }
+//                break;
+//              }
               while(true) {
-                if (!operation.isTickerValid(ticker)) {
+                try {
+                  if (!operation.isQuantityValid(quantity)) {
+                    throw new IllegalArgumentException();
+                  } else {
+                    break;
+                  }
+                } catch (IllegalArgumentException e) {
                   view.showValidQuantity();
-                  quantity = in.next();
+                  quantity = in.next().toUpperCase();
                 }
-                break;
               }
               operation.addStockToPortfolio(portfolioName, ticker, Integer.parseInt(quantity), price);
               view.showPostConfirmation();
