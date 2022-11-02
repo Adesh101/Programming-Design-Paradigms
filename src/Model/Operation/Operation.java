@@ -79,6 +79,15 @@ public class Operation implements IOperation {
     }
     return names;
   }
+  @Override
+  public String getExistingPortfoliosHelper(){
+    String s="";
+    String[] names = new String[this.getExistingPortfolios().length];
+    for(int i=0;i<names.length;i++) {
+      s = this.getExistingPortfolios()[i]+ "\n"+s;
+    }
+    return s;
+  }
 
   @Override
   public double getCurrentPrice(String ticker) {
@@ -239,8 +248,8 @@ public class Operation implements IOperation {
     return finalValue;
   }
 
-  @Override
-  public void quit(){
-
-  }
+//  @Override
+//  public void quit(){
+//
+//  }
 }

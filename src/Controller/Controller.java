@@ -24,6 +24,7 @@ public class Controller implements IController {
 
   @Override
   public void go() {
+    view.showWelcomeMessage();
     view.showMenu();
     String menuOption = "";
  //   try {

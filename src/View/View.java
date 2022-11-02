@@ -46,6 +46,7 @@ public class View implements IView {
   public void showWelcomeMessage() {
     StringBuilder sb = new StringBuilder();
     sb.append("Welcome! Enter the number denoting the operation to be performed:");
+    displayInput(sb.toString());
   }
 
   @Override
