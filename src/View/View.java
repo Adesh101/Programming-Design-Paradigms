@@ -1,198 +1,251 @@
 package View;
 
-import java.io.PrintStream;
+import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 
 public class View implements IView {
 
-  private PrintStream out;
+  private Appendable out;
+  private Scanner scanner;
 
-  public View(PrintStream out){
+  public View(Readable in, Appendable out) throws IllegalArgumentException {
+    if (in == null || out == null) {
+      throw new IllegalArgumentException("Input or output cannot be null.");
+    }
+    Readable read = in;
     this.out = out;
+    scanner = new Scanner(read);
   }
 
-  public void clearScreen() {
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
+  @Override
+  public String fetchInput() {
+    return nextInput();
+  }
+
+  private String nextInput() throws IllegalArgumentException {
+    try {
+      return this.scanner.next();
+    }
+    catch (Exception e) {
+      throw new IllegalArgumentException("Invalid input.");
+    }
+  }
+
+  public void displayInput(String input) {
+    try {
+      out.append(input).append("\n");
+    }
+    catch (IOException e) {
+      throw new IllegalArgumentException("Invalid input.");
+    }
   }
 
   @Override
   public void showWelcomeMessage() {
-    out.println("Welcome! Enter the number denoting the operation to be performed:");
+    StringBuilder sb = new StringBuilder();
+    sb.append("Welcome! Enter the number denoting the operation to be performed:");
   }
 
   @Override
   public void showError() {
-    out.println("Enter valid input");
+    displayInput("Enter valid input");
   }
+
   @Override
   public void showMenu(){
-    out.println("1. Create new portfolio");
-    out.println("2. Add stocks to newly created portfolio");
-    out.println("3. View all portfolio names");
-    out.println("4. View amount by date");
-    out.println("5. View Composition of Portfolio");
-    out.println("6. Quit");
-    out.println("Enter valid choice");
-  }
-  @Override
-  public void showEnterNewPortfolioName(){
-    out.println("Enter a name for the new portfolio");
-  }
-  @Override
-  public void showTicker(){
-    out.println("Enter ticker of the stock you wish to buy.");
-  }
-  @Override
-  public void showQuantity(){
-    out.println("Enter quantity of the stock you want to buy.");
-  }
-  @Override
-  public void showConfirmation(double price){
-    out.println("The current price of the stock is: "+price);
-    out.println("Are you sure you want to proceed with the transaction?(Y/N)");
-  }
-  @Override
-  public void showOrderConfirmationDeclined(){
-    out.println("Your order was cancelled.");
-  }
-  @Override
-  public void showPostConfirmation(){
-    out.println("Order placed successfully!");
-    out.println("Do you wish to add more stocks?(Y/N)");
+    StringBuilder sb = new StringBuilder();
+    sb.append("1. Create new portfolio\n");
+    sb.append("2. Add stocks to newly created portfolio\n");
+    sb.append("3. View all portfolio names\n");
+    sb.append("4. View amount by date\n");
+    sb.append("5. View Composition of Portfolio\n");
+    sb.append("6. Quit\n");
+    sb.append("Enter valid choice");
+    displayInput(sb.toString());
   }
 
   @Override
-  public void showQuit(){
-    out.println("Do you want to quit?(Y/N)");
+  public String showEnterNewPortfolioName(){
+    displayInput("Enter a name for the new portfolio");
+    return nextInput();
   }
 
   @Override
-  public void showStockMenu() {
-    out.println("Select one of the option:");
-    out.println("1. Buy a stock");
-    out.println("2. Sell a stock");
+  public String showTicker(){
+    displayInput("Enter ticker of the stock you wish to buy.");
+    return nextInput();
   }
 
   @Override
-  public void showPortfolioMenuOption() {
-    out.println("1. Create new portfolio through console");
-    out.println("2. Create new portfolio through file");
+  public int showQuantity(){
+    while(true) {
+      displayInput("Enter quantity of the stock you want to buy.");
+      String quantity = nextInput();
+      try{
+        int quantityInt = Integer.parseInt(quantity);
+        return quantityInt;
+      } catch (InputMismatchException ex) {
+        displayInput("Please enter whole numbers!");
+      }
+    }
+  }
+
+  @Override
+  public String showPostConfirmation(){
+    displayInput("Order placed successfully!");
+    while(true) {
+      displayInput("Do you wish to add more stocks?(Y/N)");
+      String confirmation = nextInput();
+      if (confirmation.equals("Y") || confirmation.equals("N")) {
+        return confirmation;
+      }
+      displayInput("Invalid input. Enter valid input!");
+    }
+  }
+
+  @Override
+  public String showQuit() {
+    while (true) {
+      displayInput("Do you want to quit?(Y/N)");
+      String confirmation = nextInput();
+      if (confirmation.equals("Y") || confirmation.equals("N")) {
+        return confirmation;
+      }
+      displayInput("Invalid input. Enter valid input!");
+    }
+  }
+
+  @Override
+  public String showStockMenu() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("Select one of the option:");
+      sb.append("1. Buy a stock");
+      sb.append("2. Sell a stock");
+      displayInput(sb.toString());
+      while (true) {
+        String option = nextInput();
+        if (option.equals("1") || option.equals("2")) {
+          return option;
+        }
+      displayInput("Invalid input. Enter valid input!");
+    }
+  }
+
+  @Override
+  public String showPortfolioMenuOption() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("1. Create new portfolio through console\n");
+    sb.append("2. Create new portfolio through file");
+    displayInput(sb.toString());
+    while (true) {
+      String option = nextInput();
+      if (option.equals("1") || option.equals("2")) {
+        return option;
+      }
+      displayInput("Invalid input. Enter valid input!");
+    }
   }
 
   @Override
   public void showInvalidPortfolioName() {
-    out.println("Please enter a valid portfolio name!");
+    displayInput("Please enter a valid portfolio name!");
   }
 
   @Override
-  public void showFileName() {
-    out.println("Enter file name");
+  public String showFileName() {
+    displayInput("Enter file name");
+    return nextInput();
   }
 
   @Override
-  public void showCurrentPrice(double text) {
-    out.println("The price of the current stock is : "+text);
-    out.println("Are you sure you wish to proceed with the transaction?(Y/N)");
+  public void showInvalidFileError() {
+    displayInput("Invalid file.");
   }
 
-  @Override
-  public void showOrderCancelled() {
-    out.println("Order cancelled!");
-    out.println("Going back to the main menu");
-    clearScreen();
-  }
   @Override
   public void showOrderCompleted(){
-    out.println("Order Completed.");
+    displayInput("Order Completed.");
   }
+
   @Override
   public void showMenuMessage() {
-    out.println("Portfolio locked!");
-    out.println("Going to the main menu.");
+    displayInput("Portfolio locked!");
+    displayInput("Going to the main menu.");
   }
 
   @Override
   public void showPortfolioNames(String[] names) {
+    StringBuilder sb = new StringBuilder();
     for(int i=0;i<names.length;i++){
-      out.println(i+1 + " " + names[i]);
+      sb.append(i+1 + " " + names[i]).append("\n");
     }
+    displayInput(sb.toString());
   }
 
   @Override
   public void showEnterPortfolioToAddStocks() {
-    out.println("Enter portfolio name to add stocks!");
+    displayInput("Enter portfolio name to add stocks!");
   }
 
   @Override
   public void showValidPortfolio() {
-    out.println("Portfolio found!");
+    displayInput("Portfolio found!");
   }
 
   @Override
   public void showPortfolioMessage() {
-    out.println("Enter portfolio name : ");
-  }
-
-  @Override
-  public void showValidQuantity() {
-    out.println("Please enter whole numbers!");
+    displayInput("Enter portfolio name : ");
   }
 
   @Override
   public void showStockPortfolio(String[][] composition) {
-    System.out.println("Your portfolio composition is: ");
+    StringBuilder sb = new StringBuilder();
+    sb.append("Your portfolio composition is: \n");
     for(int i=0;i<composition.length;i++){
       int j=0;
-      System.out.println("Ticker : "+ composition[i][j]+" Buy Price : "+composition[i][++j]+" Quantity : "+composition[i][++j]+" Current Value : "+composition[i][++j]);
+      sb.append("Ticker : ");
+      sb.append(composition[i][j]);
+      sb.append(" Quantity: ");
+      sb.append(composition[i][++j]);
+      sb.append(" Buy Price : ");
+      sb.append(composition[i][++j]);
+      sb.append(" Current Value : ");
+      sb.append(composition[i][++j]);
+      sb.append("\n");
     }
+    displayInput(sb.toString());
   }
 
   @Override
   public void showAllPortfolioNames(String names){
-    out.println(names);
-
-  }
-
-  @Override
-  public void showStockBuy() {
-    out.println("Enter stock ticker to buy:");
-  }
-
-  @Override
-  public void showStockSell() {
-    out.println("Enter stock ticker to sell:");
+    displayInput(names);
   }
 
   @Override
   public void showTickerError() {
-    out.println("Please enter a valid ticker!");
+    displayInput("Please enter a valid ticker!");
   }
 
   @Override
   public void showPortfolioLockedError() {
-    out.println("This portfolio is locked");
-    out.println("Enter unlocked portfolio name or create a new portfolio");
-  }
-
-  @Override
-  public void showFractionalShareError() {
-    out.println("Fractional shares purchase not allowed");
+    displayInput("This portfolio is locked");
+    displayInput("Enter unlocked portfolio name or create a new portfolio");
   }
 
   @Override
   public void showPortfolioExists() {
-    out.println("Portfolio already exists");
+    displayInput("Portfolio already exists");
   }
 
   @Override
   public void showPortfolioCreatedSuccessfully(String name) {
-    out.println("Portfolio "+ name +" Created Succesfully");
+    displayInput("Portfolio "+ name +" created succesfully.");
   }
 
   @Override
   public void showNoPortfoliosPresent() {
-    out.println("No portfolios Found");
+    displayInput("No portfolios Found");
   }
-
 }

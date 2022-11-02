@@ -2,55 +2,59 @@ package Controller;
 
 import Controller.actions.IActions;
 import Controller.actions.addStockToPortfolio;
+import Controller.actions.createNewPortfolioCSV;
 import Controller.actions.showAmountOfPortfolioByDate;
 import Controller.actions.showComposition;
 import Controller.actions.showExistingPortfolios;
 import Model.Operation.IOperation;
 import View.IView;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import Controller.actions.createNewPortfolio;
 
 public class Controller implements IController {
   private IOperation operation;
   private IView view;
   private IActions action;
-  private Scanner in;
 
   public Controller(IOperation operation, IView view) throws IllegalArgumentException {
     if(operation == null || view == null)
       throw new IllegalArgumentException();
     this.operation = operation;
     this.view = view;
-    this.in = new Scanner(System.in);
   }
 
   @Override
   public void go() {
     view.showMenu();
-    int menuOption = 0;
-    try {
+    String menuOption = "";
+ //   try {
       while(true) {
         try {
-          menuOption = in.nextInt();
+          menuOption = view.fetchInput();
           break;
         } catch (Exception ex) {
           System.out.println("Please enter a number from the following options presented above.");
-          in.nextLine();
+          view.fetchInput();
         }
       }
       boolean flag=false;
       while(!flag) {
         flag=true;
         switch (menuOption) {
-          case 1:
-            action = new createNewPortfolio(operation, view);
-            action.go();
+          case "1":
+            String option = view.showPortfolioMenuOption();
+            if (option.equals("1")) {
+              action = new createNewPortfolio(operation, view);
+              action.go();
+            } else if (option.equals("2")) {
+              String fileName = view.showFileName();
+              action = new createNewPortfolioCSV(operation, view, fileName);
+              action.go();
+            }
             view.showMenu();
-            menuOption = in.nextInt();
+            menuOption = view.fetchInput();
             flag = false;
             break;
-          case 2:
+          case "2":
             if(operation.getExistingPortfolios().length==0){
               view.showNoPortfoliosPresent();
             }
@@ -60,41 +64,41 @@ public class Controller implements IController {
             }
             flag = false;
             view.showMenu();
-            menuOption = in.nextInt();
+            menuOption = view.fetchInput();
             break;
-          case 3:
+          case "3":
             action = new showExistingPortfolios(operation, view);
             action.go();
             flag = false;
             view.showMenu();
-            menuOption = in.nextInt();
+            menuOption = view.fetchInput();
             break;
-          case 4:
+          case "4":
             action = new showAmountOfPortfolioByDate(operation, view);
             action.go();
             flag = false;
             view.showMenu();
-            menuOption = in.nextInt();
+            menuOption = view.fetchInput();
             break;
-          case 5:
+          case "5":
             action = new showComposition(operation, view);
             action.go();
             flag = false;
             view.showMenu();
-            menuOption = in.nextInt();
+            menuOption = view.fetchInput();
             break;
-          case 6:
+          case "6":
             flag=true;
             break;
           default:
             System.out.println("Invalid Response. ");
             flag=false;
-            menuOption= in.nextInt();
+            menuOption= view.fetchInput();
         }
       }
-    } catch (Exception ex) {
-      view.showError();
-      in.nextLine();
-    }
+//    } catch (Exception ex) {
+//      view.showError();
+//      view.fetchInput();
+//    }
   }
 }

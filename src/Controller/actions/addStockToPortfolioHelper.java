@@ -25,7 +25,7 @@ public class addStockToPortfolioHelper {
 
   protected void createPortfolio() {
     if (operation.getPortfolio(this.portfolio)) {
-      operation.callStockAPIHelper(this.stockName);
+      //operation.callStockAPIHelper(this.stockName);
       this.price = operation.getCurrentPrice(this.stockName);
       operation.addStockToPortfolio(this.portfolio, this.stockName, this.quantity, this.price);
     } else {

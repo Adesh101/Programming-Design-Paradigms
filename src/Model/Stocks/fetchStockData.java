@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class fetchStockData {
+  String[] stockData;
+
+  fetchStockData() {
+    this.stockData = new String[100];
+  }
+
+
   public String[] callStockAPI(String ticker) {
     String apiKey = "DRH4BIM55S9Y82AI";
     URL url = null;
@@ -34,9 +41,9 @@ public class fetchStockData {
     } catch (IOException e) {
       throw new IllegalArgumentException("No price data found for " + ticker);
     }
-    String[] introduction = output.toString().split(",");
+    this.stockData = output.toString().split(",");
     //return Double.parseDouble(introduction[13]);
-    return introduction;
+    return this.stockData;
   }
 
   public String[] callStockAPIbyDate(String ticker, String date) {
@@ -78,8 +85,8 @@ public class fetchStockData {
         break;
       }
     }
-    String[] newTemp = storeTemp.split(",");
+    this.stockData = storeTemp.split(",");
     //System.out.println(newTemp[1]);
-    return newTemp;
+    return this.stockData;
   }
 }
