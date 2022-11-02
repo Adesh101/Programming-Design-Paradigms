@@ -15,6 +15,11 @@ public interface IOperation {
   boolean checkPortfolioAlreadyExists(String name);
   boolean isTickerValid(String ticker);
   boolean isQuantityValid(String quantity);
+  void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios);
+
+  List<String> getStockNamesFromPortfolio();
+
+  HashMap<String, HashMap<String, List<String>>> getPortfolio();
 
   void callStockAPIHelper(String ticker);
   double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date);

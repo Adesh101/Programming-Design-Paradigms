@@ -17,14 +17,12 @@ public class showComposition implements IActions {
   }
 
   @Override
-  public String go() {
+  public void go() {
     view.showPortfolioMessage();
     String portfolioName = in.nextLine();
     if(operation.getPortfolio(portfolioName)){
       view.showValidPortfolio();
       view.showStockPortfolio(operation.getStocksMap(portfolioName));
-      //view.showStockPortfolio(operation.getPortfolioComposition(portfolioName));
     }
-    return "null";
   }
 }

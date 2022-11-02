@@ -6,7 +6,7 @@ public class Stocks implements IStocks{
   fetchStockData data;
 
   public Stocks(){
-    this.stockData = new String[50]; //null;data.callStockAPI(ticker);
+    this.stockData = new String[50];
     this.data = new fetchStockData();
   }
 

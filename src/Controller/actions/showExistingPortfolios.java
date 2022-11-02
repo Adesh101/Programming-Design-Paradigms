@@ -1,10 +1,7 @@
 package Controller.actions;
 
 import Model.Operation.IOperation;
-import Model.Portfolio.IPortfolio;
-import Model.Stocks.IStocks;
 import View.IView;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class showExistingPortfolios implements IActions {
@@ -19,14 +16,10 @@ public class showExistingPortfolios implements IActions {
   }
 
   @Override
-  public String go() {
-    //view.showPortfolioNames(portfolio.portfolioNames());
+  public void go() {
     if(operation.getExistingPortfolios().length==0){
       view.showNoPortfoliosPresent();
-      return null;
     }
-
     view.showPortfolioNames(operation.getExistingPortfolios());
-  return null;
   }
 }

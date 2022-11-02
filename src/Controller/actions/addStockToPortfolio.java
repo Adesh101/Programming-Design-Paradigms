@@ -2,98 +2,70 @@ package Controller.actions;
 
 import Model.Operation.IOperation;
 import View.IView;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class addStockToPortfolio implements IActions {
 
   IOperation operation;
   IView view;
-  createNewPortfolio portfolio;
   private Scanner in;
+  String portfolioName;
+  String ticker;
+  int quantity;
+  addStockToPortfolioHelper helper;
+
 
   public addStockToPortfolio(IOperation operation, IView view) {
     this.operation = operation;
     this.view = view;
     this.in = new Scanner(System.in);
+    this.portfolioName = "";
+    this.quantity = 0;
+    this.ticker = "";
   }
 
   @Override
-  public String go() {
-    String portfolioName="";
-    view.showEnterPortfolioToAddStocks();
-    portfolioName = in.nextLine();
-    boolean flag=true;
-      if(!operation.getPortfolio(portfolioName)){
-        flag=false;
+  public void go() {
+      view.showEnterPortfolioToAddStocks();
+      this.portfolioName = in.nextLine();
+      if (!operation.getPortfolio(portfolioName)) {
         view.showNoPortfoliosPresent();
-      }
-      else if(operation.getMapSize(portfolioName)!=0){
-        flag=false;
+      } else if (operation.getMapSize(portfolioName) != 0) {
         view.showPortfolioLockedError();
-      }
-      String addStockConfirmation="";
-    if(flag) {
-      if (operation.getPortfolio(portfolioName)) {
-        view.showValidPortfolio();
+      } else {
         String orderConfirmation = "Y";
-        while (orderConfirmation.equalsIgnoreCase("Y")) {
-          addStockConfirmation = "Y";
-          while (orderConfirmation.equalsIgnoreCase("Y") && addStockConfirmation.equalsIgnoreCase(
-              "Y")) {
-            //copied from above
-            view.showTicker();
-            String ticker = in.next().toUpperCase();
-            //String[] stockData = operation.callStockAPIHelper(ticker);
-//
-            while(true) {
-              try {
-                if (!operation.isTickerValid(ticker)) {
-                  throw new IllegalArgumentException();
-                } else {
-                  break;
-                }
-              } catch (IllegalArgumentException e) {
-                view.showTickerError();
-                ticker = in.next().toUpperCase();
+        while(orderConfirmation.equalsIgnoreCase("Y")) {
+          view.showTicker();
+          this.ticker = in.next();
+          while (true) {
+            try {
+              if (!operation.isTickerValid(ticker)) {
+                throw new IllegalArgumentException();
+              } else {
+                break;
               }
+            } catch (IllegalArgumentException e) {
+              view.showTickerError();
+              this.ticker = in.next().toUpperCase();
             }
-            operation.callStockAPIHelper(ticker);
-            double price = operation.getCurrentPrice(ticker);
-            view.showConfirmation(price);
-            orderConfirmation = in.next();
-            //
-            if (orderConfirmation.equalsIgnoreCase("Y")) {
+          }
+          while (true) {
+            try {
               view.showQuantity();
-              String quantity = in.next();
-              while(true) {
-                try {
-                  if (!operation.isQuantityValid(quantity)) {
-                    throw new IllegalArgumentException();
-                  } else {
-                    break;
-                  }
-                } catch (IllegalArgumentException e) {
-                  view.showValidQuantity();
-                  quantity = in.next().toUpperCase();
-                }
-              }
-              operation.addStockToPortfolio(portfolioName, ticker, Integer.parseInt(quantity), price);
-              view.showPostConfirmation();
-              addStockConfirmation = in.next();
+              this.quantity = Integer.parseInt(in.next());
+              break;
+            } catch (Exception e) {
+              view.showValidQuantity();
             }
           }
-          if (addStockConfirmation.equalsIgnoreCase("N")) {
-            view.showOrderCompleted();
-            orderConfirmation = "N";
-          }
-        }
-        if (orderConfirmation.equalsIgnoreCase("N") && addStockConfirmation.equalsIgnoreCase("Y")) {
-          view.showOrderCancelled();
+          this.helper = new addStockToPortfolioHelper(this.portfolioName, this.ticker, this.quantity,
+              this.operation, this.view);
+          this.helper.createPortfolio();
+          view.showPostConfirmation();
+          orderConfirmation = in.next();
         }
         view.showMenuMessage();
       }
-    }
-    return "Stocks added successfully!";
+    operation.writeToCSV(operation.getPortfolio());
   }
 }

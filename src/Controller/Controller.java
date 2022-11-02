@@ -7,6 +7,7 @@ import Controller.actions.showComposition;
 import Controller.actions.showExistingPortfolios;
 import Model.Operation.IOperation;
 import View.IView;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.actions.createNewPortfolio;
 
@@ -27,61 +28,73 @@ public class Controller implements IController {
   @Override
   public void go() {
     view.showMenu();
-    int menuOption = in.nextInt();
-    boolean flag=false;
-    while(!flag) {
-      flag=true;
-      switch (menuOption) {
-        case 1:
-          action = new createNewPortfolio(operation, view);
-          action.go();
-          view.showMenu();
-          menuOption = in.nextInt();
-          flag = false;
-          break;
-        case 2:
-          if(operation.getExistingPortfolios().length==0){
-            view.showNoPortfoliosPresent();
-          }
-          else {
-            action = new addStockToPortfolio(operation, view);
-            action.go();
-          }
-          flag = false;
-          view.showMenu();
+    int menuOption = 0;
+    try {
+      while(true) {
+        try {
           menuOption = in.nextInt();
           break;
-        case 3:
-          action = new showExistingPortfolios(operation, view);
-          action.go();
-          flag = false;
-          view.showMenu();
-          menuOption = in.nextInt();
-          break;
-        case 4:
-          action = new showAmountOfPortfolioByDate(operation, view);
-          action.go();
-          flag = false;
-          view.showMenu();
-          menuOption = in.nextInt();
-          break;
-        case 5:
-          action = new showComposition(operation, view);
-          action.go();
-          flag = false;
-          view.showMenu();
-          menuOption = in.nextInt();
-          break;
-        case 6:
-          flag=true;
-          break;
-        default:
-          System.out.println("Invalid Response. ");
-          flag=false;
-          menuOption= in.nextInt();
+        } catch (Exception ex) {
+          System.out.println("Please enter a number from the following options presented above.");
+          in.nextLine();
+        }
       }
+      boolean flag=false;
+      while(!flag) {
+        flag=true;
+        switch (menuOption) {
+          case 1:
+            action = new createNewPortfolio(operation, view);
+            action.go();
+            view.showMenu();
+            menuOption = in.nextInt();
+            flag = false;
+            break;
+          case 2:
+            if(operation.getExistingPortfolios().length==0){
+              view.showNoPortfoliosPresent();
+            }
+            else {
+              action = new addStockToPortfolio(operation, view);
+              action.go();
+            }
+            flag = false;
+            view.showMenu();
+            menuOption = in.nextInt();
+            break;
+          case 3:
+            action = new showExistingPortfolios(operation, view);
+            action.go();
+            flag = false;
+            view.showMenu();
+            menuOption = in.nextInt();
+            break;
+          case 4:
+            action = new showAmountOfPortfolioByDate(operation, view);
+            action.go();
+            flag = false;
+            view.showMenu();
+            menuOption = in.nextInt();
+            break;
+          case 5:
+            action = new showComposition(operation, view);
+            action.go();
+            flag = false;
+            view.showMenu();
+            menuOption = in.nextInt();
+            break;
+          case 6:
+            flag=true;
+            break;
+          default:
+            System.out.println("Invalid Response. ");
+            flag=false;
+            menuOption= in.nextInt();
+        }
+      }
+    } catch (Exception ex) {
+      view.showError();
+      in.nextLine();
     }
-    //action.go();
-
   }
 }

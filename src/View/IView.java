@@ -22,6 +22,9 @@ public interface IView {
   void clearScreen();
 
   void showStockMenu();
+  void showPortfolioMenuOption();
+  void showInvalidPortfolioName();
+  void showFileName();
 
   void showCurrentPrice(double text);
   void showOrderCancelled();

@@ -75,6 +75,22 @@ public class View implements IView {
   }
 
   @Override
+  public void showPortfolioMenuOption() {
+    out.println("1. Create new portfolio through console");
+    out.println("2. Create new portfolio through file");
+  }
+
+  @Override
+  public void showInvalidPortfolioName() {
+    out.println("Please enter a valid portfolio name!");
+  }
+
+  @Override
+  public void showFileName() {
+    out.println("Enter file name");
+  }
+
+  @Override
   public void showCurrentPrice(double text) {
     out.println("The price of the current stock is : "+text);
     out.println("Are you sure you wish to proceed with the transaction?(Y/N)");
@@ -120,7 +136,7 @@ public class View implements IView {
 
   @Override
   public void showValidQuantity() {
-    out.println("Quantity cannot be fractional. Please enter whole numbers!");
+    out.println("Please enter whole numbers!");
   }
 
   @Override
@@ -171,7 +187,7 @@ public class View implements IView {
 
   @Override
   public void showPortfolioCreatedSuccessfully(String name) {
-    out.println("Portfolio "+name+" Created Succesfully");
+    out.println("Portfolio "+ name +" Created Succesfully");
   }
 
   @Override

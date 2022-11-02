@@ -2,6 +2,12 @@ package Model.Operation;
 
 import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +18,8 @@ public class Operation implements IOperation {
   protected double totalValue;
   protected IStocks stocks;
   protected IPortfolio portfolio;
+  private static final String CSV_SEPARATOR = ",";
+
 
   public Operation(IStocks stocks, IPortfolio portfolio) {
     this.portfolioName = "";
@@ -31,7 +39,6 @@ public class Operation implements IOperation {
 
   @Override
   public void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price) {
-
       if(portfolios.get(portfolioName).containsKey(ticker)){
         double existingPrice = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(0));
         //Recheck existingPrice+price
@@ -100,6 +107,61 @@ public class Operation implements IOperation {
         return false;
     }
     return true;
+  }
+
+  @Override
+  public void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios) {
+    try
+    {
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("stonks.csv"), "UTF-8"));
+      for (String portfolioName : portfolios.keySet())
+      {
+        StringBuffer oneLine = new StringBuffer();
+        oneLine.append("Portfolio Name");
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append(portfolioName);
+        oneLine.append("\n");
+        oneLine.append("Stock");
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append("Price");
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append("Quantity");
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append("Total");
+        oneLine.append(CSV_SEPARATOR);
+        oneLine.append("\n");
+        for (String stockData : portfolios.get(portfolioName).keySet()) {
+          oneLine.append(stockData);
+          oneLine.append(CSV_SEPARATOR);
+          for (String metaStockData : portfolios.get(portfolioName).get(stockData)) {
+            oneLine.append(metaStockData);
+            oneLine.append(CSV_SEPARATOR);
+          }
+        }
+        bw.write(oneLine.toString());
+        bw.newLine();
+      }
+      bw.flush();
+      bw.close();
+    } catch (IOException e) {
+      System.out.println("ABC");
+    }
+  }
+
+  @Override
+  public List<String> getStockNamesFromPortfolio() {
+    List<String> list = new ArrayList<String>();
+    for (String portfolioName: this.portfolios.keySet()) {
+      for(String stockName: this.portfolios.get(portfolioName).keySet()) {
+        list.add(stockName.toString());
+      }
+    }
+    return list;
+  }
+
+  @Override
+  public HashMap<String, HashMap<String, List<String>>> getPortfolio() {
+    return this.portfolios;
   }
 
   @Override
