@@ -102,7 +102,7 @@ public class Operation implements IOperation {
   @Override
   public boolean isTickerValid(String ticker) {
     String[] stockData = stocks.callStockAPI(ticker);
-    return stockData.length == 1;
+    return stockData.length != 1;
   }
 
   @Override

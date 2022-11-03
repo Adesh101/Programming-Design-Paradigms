@@ -1,7 +1,8 @@
-package model.operation;
+package model;
 
 import java.util.HashMap;
 import java.util.List;
+import model.operation.IOperation;
 
 /**
  * Mock Model to test controller.
@@ -16,7 +17,7 @@ public class MockModel implements IOperation {
 
   @Override
   public void createNewPortfolio(String portfolioName) {
-    log.append("PORTFOLIO: " + portfolioName + " " + " CREATED SUCCESSFULLY. \n");
+    log.append("PORTFOLIO: " + portfolioName + " " + " CREATED SUCCESSFULLY. ");
   }
 
   @Override

@@ -1,7 +1,9 @@
-package model.operation;
+package model;
 
 import static junit.framework.TestCase.assertEquals;
 
+import model.operation.IOperation;
+import model.operation.Operation;
 import model.stocks.IStocks;
 import model.stocks.Stocks;
 import java.io.BufferedReader;

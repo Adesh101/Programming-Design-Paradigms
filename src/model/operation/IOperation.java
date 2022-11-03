@@ -9,13 +9,13 @@ import java.util.List;
 public interface IOperation {
 
   /**
-   * This method adds a new portfolio name to the hashmap.
+   * A method to add a new portfolio name to the hashmap.
    * @param: portfolioName name of the new portfolio
    */
   void createNewPortfolio(String portfolioName);
 
   /**
-   * This method adds a stock to the existing portfolio.
+   * A method to add  a stock to the existing portfolio.
    * @param: portfolioName name of the portfolio in which stock is to be added
    * @param: ticker symbol of the stock to be added
    * @param: quantity of the stock to be added
@@ -25,47 +25,47 @@ public interface IOperation {
 
 
   /**
-   * This method returns all the existing portfolios.
+   * A method that returns all the existing portfolios.
    * @return: portfolios
    */
   String getExistingPortfolios();
 
   /**
-   * This method returns the number of stocks stored in a portfolio.
+   * A method that returns the number of stocks stored in a portfolio.
    * @return: returns the count as integer
    * @param: portfolioName name of the portfolio
    */
   int getMapSize(String portfolioName);
 
   /**
-   * This method returns the current price of the stock.
+   * A method that returns the current price of the stock.
    * @return: returns the price in double
    * @param: ticker symbol of the stock whose price needs to be fetched
    */
   double getCurrentPrice(String ticker);
 
   /**
-   * This method check whether a portfolio already exists.
+   * A method to check whether a portfolio already exists.
    * @return: returns true if the portfolio already exists else returns false
    * @param: name of the portfolio to be checked
    */
   boolean checkPortfolioAlreadyExists(String name);
 
   /**
-   * This method checks whether the ticker is valid.
+   * A method to check whether the ticker is valid.
    * @return: returns true if ticker is valid else returns false
    * @param: ticker stock of the symbol
    */
   boolean isTickerValid(String ticker);
 
   /**
-   * This method will write the portfolio data to a csv file.
+   * A method to write the portfolio data to a csv file.
    * @param: portfolios (hashmap)
    */
   void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios);
 
   /**
-   * This method will read input from a particular file.
+   * A method to read input from a particular file.
    * @param: fileName
    * @return: parsed string input
    */
@@ -84,7 +84,7 @@ public interface IOperation {
   HashMap<String, HashMap<String, List<String>>> getPortfolioMap();
 
   /**
-   * This method fetches a particular portfolio value on a given date.
+   * A method to fetch a particular portfolio value on a given date.
    * @param: map
    * @param: date
    * @return: value of portfolio

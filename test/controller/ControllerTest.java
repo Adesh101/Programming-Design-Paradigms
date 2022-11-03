@@ -3,7 +3,7 @@ package controller;
 import static org.junit.Assert.assertEquals;
 
 import model.operation.IOperation;
-import model.operation.MockModel;
+import model.MockModel;
 import view.IView;
 import view.View;
 import java.io.StringReader;
@@ -32,79 +32,97 @@ public class ControllerTest {
 
   @Test
   public void testCreatePortfolio() {
-    in = new StringReader("1 1 abc 6");
+    in = new StringReader("1\n1\nabc\n6");
     view = new View(in, out);
     controller = new Controller(model, view);
     controller.operate(model);
-    assertEquals("Portfolio name: abc"
-        + "Portfolio abc Created Succesfully", log.toString());
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. ", log.toString());
 
   }
 
   @Test
   public void testCreateMultiplePortfolios() {
-    in = new StringReader("1 1 abc 1 1 bcd 6");
+    in = new StringReader("1\n1\nabc\n1\n1\nbcd\n6");
     view = new View(in, out);
     controller = new Controller(model, view);
     //controller.go();
-    assertEquals("Portfolio name: abc"
-        + "Portfolio abc Created Succesfully"
-        + "Portfolio name: bcd"
-        + "Portfolio bcd Created Succesfully", log.toString());
+    controller.operate(model);
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. PORTFOLIO: bcd  CREATED SUCCESSFULLY. ", log.toString());
   }
 
   @Test
   public void testCreateMultiplePortfoliosFromConsoleThenDisplay() {
 
-    in = new StringReader("1 1 abc 1 1 bcd 3 6");
+    in = new StringReader("1\n1\nabc\n1\n1\nbcd\n3\n6");
     view = new View(in, out);
     controller = new Controller(model, view);
-    //controller.go();
-    assertEquals("Portfolio name: abc"
-            + "Portfolio abc Created Succesfully"
-            + "Portfolio name: bcd"
-            + "Portfolio bcd Created Succesfully"
-            + "Portfolio List"
-            + "Portfolio List", log.toString());
+    controller.operate(model);
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. PORTFOLIO: bcd  CREATED SUCCESSFULLY. PORTFOLIO LIST:\n", log.toString());
     // assertEquals(,out.toString());
 
   }
-
   @Test
-  public void testShowALlPortfolios() {
-    in = new StringReader("3 6");
-    view = new View(in, out);
-    controller = new Controller(model, view);
-    //controller.go();
-    assertEquals("Portfolio List"
-        + "Portfolio List", log.toString());
-  }
-
-  // needs work
-  @Test
-  public void testPortfolioComposition() {
+  public void testAddMultipleStocks(){
     model = new MockModel(log);
-    in = new StringReader("1 1 abc 6");
+    in = new StringReader("1\n1\nabc\n2\nabc\nGOOG\n10\nY\nabc\nAAPL\n10\nY\nabc\nMETA\n10\nN\n6");
     view = new View(in, out);
     controller = new Controller(model, view);
     controller.operate(model);
-    assertEquals("PORTFOLIO abc CREATED SUCCESSFULLY.", log.toString());
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. PORTFOLIO NAME: abc\n"
+        + "TICKER: GOOG\n"
+        + "TICKER: GOOG\n"
+        + "PORTFOLIO NAME: abc STOCK: GOOG QUANTITY: 10 PRICE: 0.0 \n"
+        + "PORTFOLIO NAME: abc\n"
+        + "TICKER: AAPL\n"
+        + "TICKER: AAPL\n"
+        + "PORTFOLIO NAME: abc STOCK: AAPL QUANTITY: 10 PRICE: 0.0 \n"
+        + "PORTFOLIO NAME: abc\n"
+        + "TICKER: META\n"
+        + "TICKER: META\n"
+        + "PORTFOLIO NAME: abc STOCK: META QUANTITY: 10 PRICE: 0.0 \n",log.toString());
   }
-
   @Test
-  public void testAddStocks() {
+  public void testShowComposition(){
     model = new MockModel(log);
-    in = new StringReader("1 2 ascsa 2 ascsa GOOG 10 N 6");
+    in = new StringReader("1\n1\nabc\n2\nabc\nGOOG\n10\nY\nabc\nAAPL\n10\nY\nabc\nMETA\n10\nN\n5\nabc\n6");
     view = new View(in, out);
     controller = new Controller(model, view);
     controller.operate(model);
-    assertEquals("PORTFOLIO abc CREATED SUCCESSFULLY. \n"
-            + "PORTFOLIO: abcTICKER: GOOGTICKER: GOOGPORTFOLIO NAME:"
-            + " abc STOCK: GOOG QUANTITY: 10 PRICE: 0.0\n"
-            + "PORTFOLIO: abcTICKER: METATICKER: METAPORTFOLIO NAME:"
-            + " abc STOCK: META QUANTITY: 100 PRICE: 0.0\n"
-            + "PORTFOLIO: abcTICKER: AAPLTICKER: AAPLPORTFOLIO NAME:"
-            + " abc STOCK: AAPL QUANTITY: 17 PRICE: 0.0\n",
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. PORTFOLIO NAME: abc\n"
+        + "TICKER: GOOG\n"
+        + "TICKER: GOOG\n"
+        + "PORTFOLIO NAME: abc STOCK: GOOG QUANTITY: 10 PRICE: 0.0 \n"
+        + "PORTFOLIO NAME: abc\n"
+        + "TICKER: AAPL\n"
+        + "TICKER: AAPL\n"
+        + "PORTFOLIO NAME: abc STOCK: AAPL QUANTITY: 10 PRICE: 0.0 \n"
+        + "PORTFOLIO NAME: abc\n"
+        + "TICKER: META\n"
+        + "TICKER: META\n"
+        + "PORTFOLIO NAME: abc STOCK: META QUANTITY: 10 PRICE: 0.0 \n"
+        + "PORTFOLIO COMPOSITION: \n",log.toString());
+  }
+
+  @Test
+  public void testShowAmountByDate() {
+    model = new MockModel(log);
+    in = new StringReader("1\n1\nabc\n2\nabc\nGOOG\n10\nY\nabc\nAAPL\n10\nY\nabc\nMETA\n10\nN\n4\nabc\n2022-10-10\n6");
+    view = new View(in, out);
+    controller = new Controller(model, view);
+    controller.operate(model);
+    assertEquals("PORTFOLIO: abc  CREATED SUCCESSFULLY. PORTFOLIO NAME: abc\n"
+            + "TICKER: GOOG\n"
+            + "TICKER: GOOG\n"
+            + "PORTFOLIO NAME: abc STOCK: GOOG QUANTITY: 10 PRICE: 0.0 \n"
+            + "PORTFOLIO NAME: abc\n"
+            + "TICKER: AAPL\n"
+            + "TICKER: AAPL\n"
+            + "PORTFOLIO NAME: abc STOCK: AAPL QUANTITY: 10 PRICE: 0.0 \n"
+            + "PORTFOLIO NAME: abc\n"
+            + "TICKER: META\n"
+            + "TICKER: META\n"
+            + "PORTFOLIO NAME: abc STOCK: META QUANTITY: 10 PRICE: 0.0 \n"
+            + "PORTFOLIO NAME: abc  DATE: 2022-10-10\n",
         log.toString());
   }
 
