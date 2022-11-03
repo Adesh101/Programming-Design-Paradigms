@@ -11,7 +11,7 @@ public class MockModel implements IOperation {
   @Override
   public void createNewPortfolio(String portfolioName) {
     log.append("Portfolio "+portfolioName+" Created Succesfully");
-    return "Portfolio Created Successfully";
+    //return "Portfolio Created Successfully";
   }
 
   @Override
@@ -28,7 +28,8 @@ public class MockModel implements IOperation {
   @Override
   public String getExistingPortfolios() {
     log.append("Portfolio List");
-    return new String[0];
+    //return new String[0];
+    return null;
   }
 
   @Override
@@ -73,6 +74,11 @@ public class MockModel implements IOperation {
   }
 
   @Override
+  public String readFromFile(String fileName) {
+    return null;
+  }
+
+  @Override
   public List<String> getStockNamesFromPortfolio() {
     return null;
   }
@@ -101,6 +107,11 @@ public class MockModel implements IOperation {
   @Override
   public void getCurrentPriceByDate(String ticker, String date) {
     log.append("Ticker: "+ticker+"Date: "+ date);
+  }
+
+  @Override
+  public String getPortfolioComposition(String portfolioName) {
+    return null;
   }
 
   @Override

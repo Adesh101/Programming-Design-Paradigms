@@ -12,7 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class contains all the major methods that are required for the stock software.
+ */
 public class Operation implements IOperation {
+
   protected HashMap<String, HashMap<String, List<String>>> portfolios = new HashMap<String, HashMap<String, List<String>>>();
   protected String portfolioName;
   protected double totalValue;
@@ -30,11 +34,12 @@ public class Operation implements IOperation {
 
   @Override
   public void createNewPortfolio(String portfolioName) {
-    if(checkPortfolioAlreadyExists(portfolioName)){
+    if (checkPortfolioAlreadyExists(portfolioName)) {
       if (getMapSize(portfolioName) != 0) {
         throw new IllegalArgumentException("Cannot modify a locked portfolio");
       } else {
-          throw new IllegalArgumentException("Portfolio already present. Buy stocks for the portfolio.");
+        throw new IllegalArgumentException(
+            "Portfolio already present. Buy stocks for the portfolio.");
       }
     }
     this.portfolios.put(portfolioName, new HashMap<String, List<String>>());
@@ -43,42 +48,51 @@ public class Operation implements IOperation {
 
   @Override
   public void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price) {
-    if(!portfolios.containsKey(portfolioName))
+    if (!portfolios.containsKey(portfolioName)) {
       throw new IllegalArgumentException("Enter valid portfolio name.");
-      if(portfolios.get(portfolioName).containsKey(ticker)){
-        int existingNoOfStocks = Integer.parseInt(portfolios.get(portfolioName).get(ticker).get(0));
-        portfolios.get(portfolioName).get(ticker).set(0, String.valueOf(existingNoOfStocks+quantity));
-        double existingPrice = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(1));
-        portfolios.get(portfolioName).get(ticker).set(1, String.valueOf((existingPrice+price)/2));
-        double existingTotalStockValue = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(2));
-        portfolios.get(portfolioName).get(ticker).set(2, String.valueOf(existingTotalStockValue + (quantity*price)));
-        this.totalValue = totalValue + Math.round(quantity*price);
-      } else {
-        portfolios.get(portfolioName).put(ticker, new ArrayList<String>());
-        portfolios.get(portfolioName).get(ticker).add(String.valueOf(quantity));
-        portfolios.get(portfolioName).get(ticker).add(String.valueOf(price));
-        portfolios.get(portfolioName).get(ticker).add(String.valueOf(quantity*price));
-        this.totalValue = totalValue + (quantity*price);
+    }
+    if (portfolios.get(portfolioName).containsKey(ticker)) {
+      int existingNoOfStocks = Integer.parseInt(portfolios.get(portfolioName).get(ticker).get(0));
+      portfolios.get(portfolioName).get(ticker)
+          .set(0, String.valueOf(existingNoOfStocks + quantity));
+      double existingPrice = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(1));
+      portfolios.get(portfolioName).get(ticker).set(1, String.valueOf((existingPrice + price) / 2));
+      double existingTotalStockValue = Double.parseDouble(
+          portfolios.get(portfolioName).get(ticker).get(2));
+      portfolios.get(portfolioName).get(ticker)
+          .set(2, String.valueOf(existingTotalStockValue + (quantity * price)));
+      this.totalValue = totalValue + Math.round(quantity * price);
+    } else {
+      portfolios.get(portfolioName).put(ticker, new ArrayList<String>());
+      portfolios.get(portfolioName).get(ticker).add(String.valueOf(quantity));
+      portfolios.get(portfolioName).get(ticker).add(String.valueOf(price));
+      portfolios.get(portfolioName).get(ticker).add(String.valueOf(quantity * price));
+      this.totalValue = totalValue + (quantity * price);
     }
   }
 
   @Override
   public boolean getPortfolio(String name) {
-    if(!portfolios.containsKey(name))
+    if (!portfolios.containsKey(name)) {
       return false;
+    }
     return true;
   }
+
   @Override
-  public boolean checkPortfolioAlreadyExists(String name){
-    if(portfolios.containsKey(name))
+  public boolean checkPortfolioAlreadyExists(String name) {
+    if (portfolios.containsKey(name)) {
       return true;
+    }
     return false;
   }
 
   @Override
   public String getExistingPortfolios() {
-    if (portfolios.size() == 0)
-      throw new IllegalArgumentException("NO AVAILABLE PORTFOLIOS TO DISPLAY.");;
+    if (portfolios.size() == 0) {
+      throw new IllegalArgumentException("NO AVAILABLE PORTFOLIOS TO DISPLAY.");
+    }
+    ;
     StringBuilder allPortfolios = new StringBuilder();
     for (String portfolioNames : portfolios.keySet()) {
       allPortfolios.append(portfolioNames + "\n");
@@ -87,29 +101,16 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public String getExistingPortfoliosHelper(){
-    String s="";
-//    String[] names = new String[this.getExistingPortfolios().length];
-//    for(int i=0;i<names.length;i++) {
-//      s = this.getExistingPortfolios()[i]+ "\n"+s;
-//    }
-    return s;
-  }
-
-  @Override
   public double getCurrentPrice(String ticker) {
     return stocks.getStockCurrentPrice(ticker);
   }
 
   @Override
-  public void callStockAPIHelper(String ticker) {
-    stocks.callStockAPI(ticker);
-  }
-  @Override
-  public boolean isTickerValid(String ticker){
+  public boolean isTickerValid(String ticker) {
     String[] stockData = stocks.callStockAPI(ticker);
-    if (stockData.length == 1)
+    if (stockData.length == 1) {
       return false;
+    }
     return true;
   }
 
@@ -117,19 +118,19 @@ public class Operation implements IOperation {
   public boolean isQuantityValid(String quantity) {
     for (int i = 0; i < quantity.length(); i++) {
       char ch = quantity.charAt(i);
-      if(!Character.isDigit(ch))
+      if (!Character.isDigit(ch)) {
         return false;
+      }
     }
     return true;
   }
 
   @Override
   public void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios) {
-    try
-    {
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("stonks.csv"), "UTF-8"));
-      for (String portfolioName : portfolios.keySet())
-      {
+    try {
+      BufferedWriter bw = new BufferedWriter(
+          new OutputStreamWriter(new FileOutputStream("stonks.csv"), "UTF-8"));
+      for (String portfolioName : portfolios.keySet()) {
         StringBuffer oneLine = new StringBuffer();
         oneLine.append("Portfolio Name");
         oneLine.append(CSV_SEPARATOR);
@@ -188,8 +189,8 @@ public class Operation implements IOperation {
   @Override
   public List<String> getStockNamesFromPortfolio() {
     List<String> list = new ArrayList<String>();
-    for (String portfolioName: this.portfolios.keySet()) {
-      for(String stockName: this.portfolios.get(portfolioName).keySet()) {
+    for (String portfolioName : this.portfolios.keySet()) {
+      for (String stockName : this.portfolios.get(portfolioName).keySet()) {
         list.add(stockName.toString());
       }
     }
@@ -204,7 +205,7 @@ public class Operation implements IOperation {
   @Override
   public double callStockAPIByDateHelper(HashMap<String, List<String>> map, String date) {
     double currentValue = 0;
-    for (String string: map.keySet()) {
+    for (String string : map.keySet()) {
       stocks.callStockAPIByDate(string, date);
       double tempValue = stocks.getStockCurrentPriceByDate(string);
       tempValue *= Double.parseDouble(map.get(string).get(0));
@@ -213,23 +214,15 @@ public class Operation implements IOperation {
     return currentValue;
   }
 
-  @Override
-  public void getAmountByDate(String Date) {
-
-  }
 
   @Override
-  public void getCurrentPriceByDate(String ticker, String date) {
-
-  }
-  @Override
-  public String[][] getStocksMap(String name){
-    HashMap<String, List<String>> stocksMap=new HashMap<String, List<String>>();
-    stocksMap=this.portfolios.get(name);
+  public String[][] getStocksMap(String name) {
+    HashMap<String, List<String>> stocksMap = new HashMap<String, List<String>>();
+    stocksMap = this.portfolios.get(name);
     String[][] composition = new String[stocksMap.size()][4];
-    int i=0;
-    for(String string : stocksMap.keySet()){
-      int j=0;
+    int i = 0;
+    for (String string : stocksMap.keySet()) {
+      int j = 0;
       composition[i][j] = string.toString();
       composition[i][++j] = stocksMap.get(string).get(0);
       composition[i][++j] = stocksMap.get(string).get(1);
@@ -253,52 +246,27 @@ public class Operation implements IOperation {
       sb.append("TICK - QTY - PRICE - TOTAL \n");
       for (String stockName : portfolios.get(portfolioName).keySet()) {
         sb.append(stockName).append(" - ");
-        for (int i = 0; i<portfolios.get(portfolioName).get(stockName).size(); i++) {
-            sb.append(portfolios.get(portfolioName).get(stockName).get(i)).append(" - ");
+        for (int i = 0; i < portfolios.get(portfolioName).get(stockName).size(); i++) {
+          sb.append(portfolios.get(portfolioName).get(stockName).get(i)).append(" - ");
         }
       }
-      if(sb.toString().endsWith("- "))
-        finalString = sb.substring(0, sb.length()-3);
+      if (sb.toString().endsWith("- ")) {
+        finalString = sb.substring(0, sb.length() - 3);
+      }
       return finalString;
     }
     throw new IllegalArgumentException("ENTER VALID PORTFOLIO NAME.");
   }
 
-
-//    String[] composition = new String[4*this.portfolios.get(portfolioName).size()];
-////    return this.portfolios.get(portfolioName);
-////    for (String string: this.portfolios.get(portfolioName).keySet()){
-////      String ticker = string.toString();
-////      String price = this.portfolios.get(portfolioName).get(string).get(0);
-////      String quantity = this.portfolios.get(portfolioName).get(string).get(1);
-////      String currentValue = this.portfolios.get(portfolioName).get(string).get(2);
-////    }
-//   int i=0;
-//    for (String string: this.portfolios.get(portfolioName).keySet()){
-//      composition[i] = string.toString();
-//      //String ticker = string.toString(); // ticker
-//      composition[i+1] = this.portfolios.get(portfolioName).get(string).get(0); // price
-//      composition[i+2] = this.portfolios.get(portfolioName).get(string).get(1); //quantity
-//      composition[i+3] = this.portfolios.get(portfolioName).get(string).get(2); //currentValue
-//    i++;
-//    }
-//    return composition;
-  //}
-
   @Override
   public double getPortfolioByDate(String portfolioName, String date) {
     HashMap<String, List<String>> map = new HashMap<String, List<String>>();
     double totalValueByDate = 0;
-    for (String string: this.portfolios.get(portfolioName).keySet()) {
+    for (String string : this.portfolios.get(portfolioName).keySet()) {
       map.put(string, new ArrayList<>());
       map.get(string).add(portfolios.get(portfolioName).get(string).get(1));
     }
     double finalValue = callStockAPIByDateHelper(map, date);
     return finalValue;
   }
-
-//  @Override
-//  public void quit(){
-//
-//  }
 }

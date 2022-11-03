@@ -2,13 +2,11 @@ package Model.Operation;
 
 import static org.junit.Assert.*;
 
-import Controller.actions.addStockToPortfolioHelper;
 import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
 import Model.Stocks.Stocks;
 import View.IView;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,8 +1,10 @@
 package Controller.actions;
 
 import Model.Operation.IOperation;
-import Model.Operation.Operation;
 
+/**
+ * This method creates a new portfolio.
+ */
 public class createNewPortfolio implements IActions {
   private String portfolioName;
 

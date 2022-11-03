@@ -31,7 +31,7 @@ public class ControllerTest {
     in=new StringReader("1 1 abc 6");
     view = new View(in,out);
     controller = new Controller(model,view);
-    controller.go();
+    controller.go(model);
     assertEquals("Portfolio name: abc"
         + "Portfolio abc Created Succesfully",log.toString());
 
@@ -41,7 +41,7 @@ public class ControllerTest {
     in=new StringReader("1 1 abc 1 1 bcd 6");
     view = new View(in,out);
     controller = new Controller(model,view);
-    controller.go();
+    //controller.go();
     assertEquals("Portfolio name: abc"
         + "Portfolio abc Created Succesfully"
         + "Portfolio name: bcd"
@@ -53,7 +53,7 @@ public class ControllerTest {
     in=new StringReader("1 1 abc 1 1 bcd 3 6");
     view = new View(in,out);
     controller = new Controller(model,view);
-    controller.go();
+    //controller.go();
     assertEquals("Portfolio name: abc"
             + "Portfolio abc Created Succesfully"
             + "Portfolio name: bcd"
@@ -69,7 +69,7 @@ public class ControllerTest {
     in = new StringReader("3 6");
     view = new View(in,out);
     controller= new Controller(model,view);
-    controller.go();
+    //controller.go();
     assertEquals("Portfolio List"
         + "Portfolio List",log.toString());
   }
@@ -79,7 +79,7 @@ public class ControllerTest {
     in = new StringReader("1 1 abc 2 abc GOOG 10 N 5 abc 6");
     view = new View(in,out);
     controller = new Controller(model,view);
-    controller.go();
+    //controller.go();
     assertEquals("Portfolio: abc",log.toString());
 
   }

@@ -2,6 +2,9 @@ package Controller.actions;
 
 import Model.Operation.IOperation;
 
+/**
+ * This class fetches the total amount of a particular portfolio as per the passed date.
+ */
 public class showAmountOfPortfolioByDate implements IActions {
 
   private String portfolioName;
@@ -14,7 +17,7 @@ public class showAmountOfPortfolioByDate implements IActions {
 
   @Override
   public String go(IOperation operation) {
-    return "Value of " + this.portfolioName + " on " + this.date + " is : "
+    return "VALUE OF " + this.portfolioName + " ON " + this.date + " IS : "
         + operation.getPortfolioByDate(this.portfolioName, this.date) + "$";
   }
 }

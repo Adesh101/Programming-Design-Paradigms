@@ -8,7 +8,7 @@ import Model.Operation.IOperation;
 public interface IActions {
 
   /**
-   *  This is a method to execute the actions.
+   * This is a method to execute the actions.
    */
   String go(IOperation operation);
 }
