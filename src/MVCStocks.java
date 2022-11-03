@@ -1,24 +1,28 @@
-import Controller.IController;
-import Controller.Controller;
-import Model.Operation.IOperation;
-import Model.Operation.Operation;
-import Model.Portfolio.IPortfolio;
-import Model.Portfolio.Portfolio;
-import Model.Stocks.IStocks;
-import Model.Stocks.Stocks;
-import View.IView;
-import View.View;
+import controller.IController;
+import controller.Controller;
+import model.operation.IOperation;
+import model.operation.Operation;
+import model.stocks.IStocks;
+import model.stocks.Stocks;
+import view.IView;
+import view.View;
 import java.io.InputStreamReader;
 
 
+/**
+ * Class to run our main Stock software.
+ */
 public class MVCStocks {
 
+  /**
+   * main method to run the program.
+   * @param: args
+   */
   public static void main(String[] args) {
     IStocks stocks = new Stocks();
-    IPortfolio portfolio = new Portfolio("");
-    IOperation operation = new Operation(stocks, portfolio);
+    IOperation operation = new Operation(stocks);
     IView view = new View(new InputStreamReader(System.in), System.out);
     IController controller = new Controller(operation, view);
-    controller.go(operation);
+    controller.operate(operation);
   }
 }
