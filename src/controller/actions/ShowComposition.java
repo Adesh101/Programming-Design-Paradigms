@@ -6,9 +6,7 @@ import model.operation.IOperation;
  * This class will show composition of a particular portfolio.
  */
 public class ShowComposition implements IActions {
-
   private String portfolioName;
-
   public ShowComposition(String portfolioName) {
     this.portfolioName = portfolioName;
   }

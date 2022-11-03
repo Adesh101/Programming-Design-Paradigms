@@ -71,13 +71,15 @@ public class Controller implements IController {
               break;
             case "2":
               String continueAdditionOfStocks = "Y";
+              String input = "";
               while (continueAdditionOfStocks.equalsIgnoreCase("Y")
                   || continueAdditionOfStocks.equalsIgnoreCase("y")) {
-                action = new AddStockToPortfolio(view.showEnterPortfolioToAddStocks(),
-                    view.showTicker(), view.showQuantity());
+                input = view.showEnterPortfolioToAddStocks();
+                action = new AddStockToPortfolio(input, view.showTicker(), view.showQuantity());
                 view.displayInput(action.operate(operation));
                 continueAdditionOfStocks = view.showPostConfirmation();
               }
+              operation.writeToCSV(input);
               flag = false;
               view.showMenu();
               menuOption = view.fetchInput();

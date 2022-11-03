@@ -106,11 +106,12 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios) {
+  public void writeToCSV(String portfolioName) {
     try {
       BufferedWriter bw = new BufferedWriter(
-          new OutputStreamWriter(new FileOutputStream("stonks.csv"), "UTF-8"));
-      for (String portfolioName : portfolios.keySet()) {
+          new OutputStreamWriter(new FileOutputStream("./res/" + portfolioName + ".csv"), "UTF-8"));
+      HashMap<String, HashMap<String, List<String>>> portfolios = this.portfolios;
+      for (String individualPortfolioName : portfolios.keySet()) {
         StringBuffer oneLine = new StringBuffer();
         oneLine.append("Portfolio Name");
         oneLine.append(CSV_SEPARATOR);
@@ -125,10 +126,10 @@ public class Operation implements IOperation {
         oneLine.append("Total");
         oneLine.append(CSV_SEPARATOR);
         oneLine.append("\n");
-        for (String stockData : portfolios.get(portfolioName).keySet()) {
+        for (String stockData : portfolios.get(individualPortfolioName).keySet()) {
           oneLine.append(stockData);
           oneLine.append(CSV_SEPARATOR);
-          for (String metaStockData : portfolios.get(portfolioName).get(stockData)) {
+          for (String metaStockData : portfolios.get(individualPortfolioName).get(stockData)) {
             oneLine.append(metaStockData);
             oneLine.append(CSV_SEPARATOR);
           }

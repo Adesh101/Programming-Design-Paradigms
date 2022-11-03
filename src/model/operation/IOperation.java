@@ -25,35 +25,35 @@ public interface IOperation {
 
 
   /**
-   * A method that returns all the existing portfolios.
+   * A method that gives all the existing portfolios.
    * @return: portfolios
    */
   String getExistingPortfolios();
 
   /**
-   * A method that returns the number of stocks stored in a portfolio.
-   * @return: returns the count as integer
+   * A method that gives the number of stocks stored in a portfolio.
+   * @return:  the count as integer
    * @param: portfolioName name of the portfolio
    */
   int getMapSize(String portfolioName);
 
   /**
-   * A method that returns the current price of the stock.
-   * @return: returns the price in double
+   * A method that gives the current price of the stock.
+   * @return:  the price in double
    * @param: ticker symbol of the stock whose price needs to be fetched
    */
   double getCurrentPrice(String ticker);
 
   /**
    * A method to check whether a portfolio already exists.
-   * @return: returns true if the portfolio already exists else returns false
+   * @return:  true if the portfolio already exists else returns false
    * @param: name of the portfolio to be checked
    */
   boolean checkPortfolioAlreadyExists(String name);
 
   /**
    * A method to check whether the ticker is valid.
-   * @return: returns true if ticker is valid else returns false
+   * @return:  true if ticker is valid else returns false
    * @param: ticker stock of the symbol
    */
   boolean isTickerValid(String ticker);
@@ -62,7 +62,7 @@ public interface IOperation {
    * A method to write the portfolio data to a csv file.
    * @param: portfolios (hashmap)
    */
-  void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios);
+  void writeToCSV(String portfolioName);
 
   /**
    * A method to read input from a particular file.

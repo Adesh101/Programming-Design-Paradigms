@@ -57,7 +57,7 @@ public class MockModel implements IOperation {
   }
 
   @Override
-  public void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios) {
+  public void writeToCSV(String portfolios) {
     log.append("HASHMAP: " + portfolios + "\n");
   }
 

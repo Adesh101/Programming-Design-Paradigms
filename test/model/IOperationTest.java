@@ -45,7 +45,7 @@ public class IOperationTest {
     operation.isTickerValid("META");
     portfolios.get("College Savings").get("META")
             .add(1, String.valueOf(this.operation.getCurrentPrice("META")));
-    operation.writeToCSV(portfolios);
+    operation.writeToCSV(String.valueOf("College Savings"));
 
     BufferedReader br = new BufferedReader(new FileReader("stonks.csv"));
     String line = "";
