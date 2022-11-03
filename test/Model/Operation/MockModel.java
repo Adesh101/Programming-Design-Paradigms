@@ -1,6 +1,5 @@
 package Model.Operation;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class MockModel implements IOperation {
     this.log=log;
   }
   @Override
-  public String createNewPortfolio(String portfolioName) {
+  public void createNewPortfolio(String portfolioName) {
     log.append("Portfolio "+portfolioName+" Created Succesfully");
     return "Portfolio Created Successfully";
   }
@@ -27,7 +26,7 @@ public class MockModel implements IOperation {
   }
 
   @Override
-  public String[] getExistingPortfolios() {
+  public String getExistingPortfolios() {
     log.append("Portfolio List");
     return new String[0];
   }

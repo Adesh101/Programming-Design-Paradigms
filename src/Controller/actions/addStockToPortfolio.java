@@ -1,64 +1,71 @@
 package Controller.actions;
 
 import Model.Operation.IOperation;
-import View.IView;
 
 public class addStockToPortfolio implements IActions {
-
-  IOperation operation;
-  IView view;
   String portfolioName;
-  String ticker;
   int quantity;
-  addStockToPortfolioHelper helper;
+  String ticker;
+  double price;
 
-
-  public addStockToPortfolio(IOperation operation, IView view) {
-    this.operation = operation;
-    this.view = view;
-    this.portfolioName = "";
-    this.quantity = 0;
-    this.ticker = "";
+  public addStockToPortfolio(String portfolioName, String ticker, int quantity) {
+    this.portfolioName = portfolioName;
+    this.ticker = ticker;
+    this.quantity = quantity;
+    this.price = 0;
   }
 
-  @Override
-  public void go() {
-      view.showEnterPortfolioToAddStocks();
-      this.portfolioName = view.fetchInput();
-      if (!operation.getPortfolio(portfolioName)) {
-        view.showNoPortfoliosPresent();
-      } else if (operation.getMapSize(portfolioName) != 0) {
-        view.showPortfolioLockedError();
-      } else {
-        String orderConfirmation = "Y";
-        while (orderConfirmation.equalsIgnoreCase("Y")) {
-          this.ticker = view.showTicker();
-          while (true) {
-            if (operation.isTickerValid(this.ticker)) {
-              break;
-            } else {
-              view.showTickerError();
-              this.ticker = view.fetchInput();
-            }
-          }
-          this.quantity = view.showQuantity();
+//  @Override
+//  public void go() {
+//      view.showEnterPortfolioToAddStocks();
+//      this.portfolioName = view.fetchInput();
+//      if (!operation.getPortfolio(portfolioName)) {
+//        view.showNoPortfoliosPresent();
+//      } else if (operation.getMapSize(portfolioName) != 0) {
+//        view.showPortfolioLockedError();
+//      } else {
+//        String orderConfirmation = "Y";
+//        while (orderConfirmation.equalsIgnoreCase("Y")) {
+//          this.ticker = view.showTicker();
 //          while (true) {
-//            try {
-//              view.showQuantity();
-//              this.quantity = Integer.parseInt(in.next());
+//            if (operation.isTickerValid(this.ticker)) {
 //              break;
-//            } catch (Exception e) {
-//              view.showValidQuantity();
+//            } else {
+//              view.showTickerError();
+//              this.ticker = view.fetchInput();
 //            }
 //          }
-          this.helper = new addStockToPortfolioHelper(this.portfolioName, this.ticker,
-              this.quantity, this.operation, this.view);
-          this.helper.createPortfolio();
-          orderConfirmation = view.showPostConfirmation();
-        }
+//          this.quantity = view.showQuantity();
+////          while (true) {
+////            try {
+////              view.showQuantity();
+////              this.quantity = Integer.parseInt(in.next());
+////              break;
+////            } catch (Exception e) {
+////              view.showValidQuantity();
+////            }
+////          }
+//          this.helper = new addStockToPortfolioHelper(this.portfolioName, this.ticker,
+//              this.quantity, this.operation, this.view);
+//          this.helper.createPortfolio();
+//          orderConfirmation = view.showPostConfirmation();
+//        }
+//      }
+//        view.showMenuMessage();
+//    operation.writeToCSV(operation.getPortfolio());
+//  }
+
+  @Override
+  public String go(IOperation operation) {
+    if(operation.getPortfolio(this.portfolioName)) {
+      if(operation.isTickerValid(this.ticker)) {
+        this.price = operation.getCurrentPrice(this.ticker);
+        operation.addStockToPortfolio(this.portfolioName, this.ticker, this.quantity, this.price);
+        return "STOCK " + this.ticker + " WITH QUANTITY " + this.quantity + " ADDED TO " + this.portfolioName + " PORTFOLIO.";
       }
-        view.showMenuMessage();
-    operation.writeToCSV(operation.getPortfolio());
+      throw new IllegalArgumentException("ENTER A VALID STOCK TICKER.");
+    }
+    throw new IllegalArgumentException("ENTER A VALID PORTFOLIO NAME.");
   }
 }
 

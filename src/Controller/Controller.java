@@ -2,13 +2,13 @@ package Controller;
 
 import Controller.actions.IActions;
 import Controller.actions.addStockToPortfolio;
+import Controller.actions.createNewPortfolio;
 import Controller.actions.createNewPortfolioCSV;
 import Controller.actions.showAmountOfPortfolioByDate;
 import Controller.actions.showComposition;
 import Controller.actions.showExistingPortfolios;
 import Model.Operation.IOperation;
 import View.IView;
-import Controller.actions.createNewPortfolio;
 
 public class Controller implements IController {
   private IOperation operation;
@@ -22,12 +22,78 @@ public class Controller implements IController {
     this.view = view;
   }
 
+//  @Override
+//  public void go() {
+//    while(true) {
+//      view.showMenu();
+//      String menuOption = view.fetchInput();
+//      if(menuOption.equals("q"))
+//        view.displayInput("Exiting program");
+//        break;
+//      switch (menuOption) {
+//        case "1":
+//          String option = view.showPortfolioMenuOption();
+//          if (option.equals("1")) {
+//            action = new createNewPortfolio(operation, view);
+//            action.go();
+//          } else if (option.equals("2")) {
+//            String fileName = view.showFileName();
+//            action = new createNewPortfolioCSV(operation, view, fileName);
+//            action.go();
+//          }
+//          view.showMenu();
+//          menuOption = view.fetchInput();
+//          flag = false;
+//          break;
+//        case "2":
+//          if(operation.getExistingPortfolios().length==0){
+//            view.showNoPortfoliosPresent();
+//          }
+//          else {
+//            action = new addStockToPortfolio(operation, view);
+//            action.go();
+//          }
+//          flag = false;
+//          view.showMenu();
+//          menuOption = view.fetchInput();
+//          break;
+//        case "3":
+//          action = new showExistingPortfolios(operation, view);
+//          action.go();
+//          flag = false;
+//          view.showMenu();
+//          menuOption = view.fetchInput();
+//          break;
+//        case "4":
+//          action = new showAmountOfPortfolioByDate(operation, view);
+//          action.go();
+//          flag = false;
+//          view.showMenu();
+//          menuOption = view.fetchInput();
+//          break;
+//        case "5":
+//          action = new showComposition(operation, view);
+//          action.go();
+//          flag = false;
+//          view.showMenu();
+//          menuOption = view.fetchInput();
+//          break;
+//        case "6":
+//          flag=true;
+//          break;
+//        default:
+//          System.out.println("Invalid Response. ");
+//          flag=false;
+//          menuOption= view.fetchInput();
+//      }
+//    }
+//  }
   @Override
-  public void go() {
+  public void go(IOperation operation) {
     view.showWelcomeMessage();
     view.showMenu();
     String menuOption = "";
- //   try {
+    try {
       while(true) {
         try {
           menuOption = view.fetchInput();
@@ -44,46 +110,45 @@ public class Controller implements IController {
           case "1":
             String option = view.showPortfolioMenuOption();
             if (option.equals("1")) {
-              action = new createNewPortfolio(operation, view);
-              action.go();
+              action = new createNewPortfolio(view.showEnterNewPortfolioName());
+              view.displayInput(action.go(operation));
             } else if (option.equals("2")) {
               String fileName = view.showFileName();
-              action = new createNewPortfolioCSV(operation, view, fileName);
-              action.go();
+              action = new createNewPortfolioCSV(fileName);
+              view.displayInput(action.go(operation));//;
             }
             view.showMenu();
             menuOption = view.fetchInput();
             flag = false;
             break;
           case "2":
-            if(operation.getExistingPortfolios().length==0){
-              view.showNoPortfoliosPresent();
-            }
-            else {
-              action = new addStockToPortfolio(operation, view);
-              action.go();
+            String continueAdditionOfStocks = "Y";
+            while(continueAdditionOfStocks.equals("Y")) {
+              action = new addStockToPortfolio(view.showEnterPortfolioToAddStocks(), view.showTicker(), view.showQuantity());
+              view.displayInput(action.go(operation));
+              continueAdditionOfStocks = view.showPostConfirmation();
             }
             flag = false;
             view.showMenu();
             menuOption = view.fetchInput();
             break;
           case "3":
-            action = new showExistingPortfolios(operation, view);
-            action.go();
+            action = new showExistingPortfolios();
+            view.displayInput(action.go(operation));
             flag = false;
             view.showMenu();
             menuOption = view.fetchInput();
             break;
           case "4":
-            action = new showAmountOfPortfolioByDate(operation, view);
-            action.go();
-            flag = false;
+            action = new showAmountOfPortfolioByDate(view.showEnterNewPortfolioName(), view.showDate());
+            view.displayInput(action.go(operation));
+            flag = false;  //NEED TO ADD FUNCTION FOR DATE VALIDATION.6
             view.showMenu();
             menuOption = view.fetchInput();
             break;
           case "5":
-            action = new showComposition(operation, view);
-            action.go();
+            action = new showComposition(view.showEnterNewPortfolioName());
+            view.displayInput(action.go(operation));
             flag = false;
             view.showMenu();
             menuOption = view.fetchInput();
@@ -97,9 +162,10 @@ public class Controller implements IController {
             menuOption= view.fetchInput();
         }
       }
-//    } catch (Exception ex) {
-//      view.showError();
-//      view.fetchInput();
-//    }
+    } catch (Exception ex) {
+      view.displayInput(ex.getMessage());
+      view.showMenu();
+      view.fetchInput();
+    }
   }
 }

@@ -2,12 +2,12 @@ package Model.Operation;
 
 import Model.Portfolio.IPortfolio;
 import Model.Stocks.IStocks;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,16 +29,22 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public String createNewPortfolio(String portfolioName) {
-    //Have to handle exception
-    if(!portfolios.containsKey(portfolioName))
-      this.portfolios.put(portfolioName, new HashMap<String, List<String>>());
+  public void createNewPortfolio(String portfolioName) {
+    if(checkPortfolioAlreadyExists(portfolioName)){
+      if (getMapSize(portfolioName) != 0) {
+        throw new IllegalArgumentException("Cannot modify a locked portfolio");
+      } else {
+          throw new IllegalArgumentException("Portfolio already present. Buy stocks for the portfolio.");
+      }
+    }
+    this.portfolios.put(portfolioName, new HashMap<String, List<String>>());
     this.portfolioName = portfolioName;
-    return this.portfolioName;
   }
 
   @Override
   public void addStockToPortfolio(String portfolioName, String ticker, int quantity, double price) {
+    if(!portfolios.containsKey(portfolioName))
+      throw new IllegalArgumentException("Enter valid portfolio name.");
       if(portfolios.get(portfolioName).containsKey(ticker)){
         int existingNoOfStocks = Integer.parseInt(portfolios.get(portfolioName).get(ticker).get(0));
         portfolios.get(portfolioName).get(ticker).set(0, String.valueOf(existingNoOfStocks+quantity));
@@ -46,7 +52,7 @@ public class Operation implements IOperation {
         portfolios.get(portfolioName).get(ticker).set(1, String.valueOf((existingPrice+price)/2));
         double existingTotalStockValue = Double.parseDouble(portfolios.get(portfolioName).get(ticker).get(2));
         portfolios.get(portfolioName).get(ticker).set(2, String.valueOf(existingTotalStockValue + (quantity*price)));
-        this.totalValue = totalValue + (quantity*price);
+        this.totalValue = totalValue + Math.round(quantity*price);
       } else {
         portfolios.get(portfolioName).put(ticker, new ArrayList<String>());
         portfolios.get(portfolioName).get(ticker).add(String.valueOf(quantity));
@@ -70,22 +76,23 @@ public class Operation implements IOperation {
   }
 
   @Override
-  public String[] getExistingPortfolios() {
-    String[] names = new String[portfolios.size()];
-    int i =0;
-    for ( String key : portfolios.keySet() ) {
-      names[i]=key;
-      i++;
+  public String getExistingPortfolios() {
+    if (portfolios.size() == 0)
+      throw new IllegalArgumentException("NO AVAILABLE PORTFOLIOS TO DISPLAY.");;
+    StringBuilder allPortfolios = new StringBuilder();
+    for (String portfolioNames : portfolios.keySet()) {
+      allPortfolios.append(portfolioNames + "\n");
     }
-    return names;
+    return allPortfolios.toString();
   }
+
   @Override
   public String getExistingPortfoliosHelper(){
     String s="";
-    String[] names = new String[this.getExistingPortfolios().length];
-    for(int i=0;i<names.length;i++) {
-      s = this.getExistingPortfolios()[i]+ "\n"+s;
-    }
+//    String[] names = new String[this.getExistingPortfolios().length];
+//    for(int i=0;i<names.length;i++) {
+//      s = this.getExistingPortfolios()[i]+ "\n"+s;
+//    }
     return s;
   }
 
@@ -151,8 +158,31 @@ public class Operation implements IOperation {
       bw.flush();
       bw.close();
     } catch (IOException e) {
-      System.out.println("ABC");
+      System.out.println("");
     }
+  }
+
+  @Override
+  public String readFromFile(String fileName) {
+    String line = "";
+    String splitBy = ",";
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(fileName));
+      while ((line = br.readLine()) != null)   //returns a Boolean value
+      {
+        String[] portfolioNames = line.split(splitBy);    // use comma as separator
+        if (portfolioNames.length == 1) {
+          if (portfolioNames[0].length() != 0) {
+            createNewPortfolio(portfolioNames[0]);
+            this.portfolioName = portfolioNames[0];
+            break;
+          }
+        }
+      }
+    } catch (Exception ex) {
+      return "Invalid File";
+    }
+    return "Portfolio " + this.portfolioName + " successfully created.";
   }
 
   @Override
@@ -214,8 +244,27 @@ public class Operation implements IOperation {
     return this.portfolios.get(portfolioName).size();
   }
 
-//  @Override
-//  public String[] getPortfolioComposition(String portfolioName) {
+  @Override
+  public String getPortfolioComposition(String portfolioName) {
+    StringBuilder sb = new StringBuilder();
+    String finalString = "";
+    if (getPortfolio(portfolioName)) {
+      sb.append("Portfolio : ").append(portfolioName).append("\n");
+      sb.append("TICK - QTY - PRICE - TOTAL \n");
+      for (String stockName : portfolios.get(portfolioName).keySet()) {
+        sb.append(stockName).append(" - ");
+        for (int i = 0; i<portfolios.get(portfolioName).get(stockName).size(); i++) {
+            sb.append(portfolios.get(portfolioName).get(stockName).get(i)).append(" - ");
+        }
+      }
+      if(sb.toString().endsWith("- "))
+        finalString = sb.substring(0, sb.length()-3);
+      return finalString;
+    }
+    throw new IllegalArgumentException("ENTER VALID PORTFOLIO NAME.");
+  }
+
+
 //    String[] composition = new String[4*this.portfolios.get(portfolioName).size()];
 ////    return this.portfolios.get(portfolioName);
 ////    for (String string: this.portfolios.get(portfolioName).keySet()){
@@ -234,7 +283,7 @@ public class Operation implements IOperation {
 //    i++;
 //    }
 //    return composition;
-//  }
+  //}
 
   @Override
   public double getPortfolioByDate(String portfolioName, String date) {

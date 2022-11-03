@@ -10,10 +10,10 @@ public interface IOperation {
 
   /**
    * This method adds a new portfolio name to the hashmap
+   *
    * @param portfolioName name of the new portfolio
-   * @return name of the new portfolio
    */
-  String createNewPortfolio(String portfolioName);
+  void createNewPortfolio(String portfolioName);
 
   /**
    * This method adds a stock to the existing portfolio.
@@ -33,9 +33,10 @@ public interface IOperation {
 
   /**
    * This method returns all the existing portfolios.
+   *
    * @return returns string array containing names of all the portfolios
    */
-  String[] getExistingPortfolios();
+  String getExistingPortfolios();
 
   /**
    * This method returns the entire composition of the portfolio.
@@ -79,6 +80,7 @@ public interface IOperation {
    */
   boolean isQuantityValid(String quantity);
   void writeToCSV(HashMap<String, HashMap<String, List<String>>> portfolios);
+  String readFromFile(String fileName);
 
   List<String> getStockNamesFromPortfolio();
 
@@ -90,7 +92,7 @@ public interface IOperation {
   void getAmountByDate(String Date);
   void getCurrentPriceByDate(String ticker, String date);
   //void getStocksInPortfolios();
-  //String[] getPortfolioComposition(String portfolioName);
+  String getPortfolioComposition(String portfolioName);
   //void getCurrentAmountOfPortfolio();
   double getPortfolioByDate(String portfolioName, String date);
   String getExistingPortfoliosHelper();

@@ -1,18 +1,18 @@
 package View;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 
 public class View implements IView {
-
   private Appendable out;
   private Scanner scanner;
 
   public View(Readable in, Appendable out) throws IllegalArgumentException {
     if (in == null || out == null) {
-      throw new IllegalArgumentException("Input or output cannot be null.");
+      throw new IllegalArgumentException("I/O CANNOT BE NULL.");
     }
     Readable read = in;
     this.out = out;
@@ -29,17 +29,50 @@ public class View implements IView {
       return this.scanner.next();
     }
     catch (Exception e) {
-      throw new IllegalArgumentException("Invalid input.");
+      throw new IllegalArgumentException("INVALID INPUT.");
     }
   }
 
+  @Override
   public void displayInput(String input) {
     try {
       out.append(input).append("\n");
     }
     catch (IOException e) {
-      throw new IllegalArgumentException("Invalid input.");
+      throw new IllegalArgumentException("INVALID INPUT.");
     }
+  }
+
+  @Override
+  public boolean isValidDate(String input) {
+    if (input == null || !input.matches("\\d{4}-[01]\\d-[0-3]\\d"))
+      return false;
+    SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-DD");
+    df.setLenient(false);
+    try {
+      df.parse(input);
+      return true;
+    } catch (ParseException ex) {
+      return false;
+    }
+  }
+
+  @Override
+  public String showDate() {
+    while(true) {
+      displayInput("ENTER DATE TO SEE PORTFOLIO VALUE:");
+      String date = nextInput();
+      if(isValidDate(date)) {
+        return date;
+      } else {
+        displayInput("ENTER DATE IN YYYY-MM-DD FORMAT.");
+      }
+    }
+  }
+
+  @Override
+  public String showStockMenu() {
+    return null;
   }
 
   @Override
@@ -51,129 +84,116 @@ public class View implements IView {
 
   @Override
   public void showError() {
-    displayInput("Enter valid input");
+    displayInput("ENTER VALID INPUT.");
   }
 
   @Override
   public void showMenu(){
     StringBuilder sb = new StringBuilder();
-    sb.append("1. Create new portfolio\n");
-    sb.append("2. Add stocks to newly created portfolio\n");
-    sb.append("3. View all portfolio names\n");
-    sb.append("4. View amount by date\n");
-    sb.append("5. View Composition of Portfolio\n");
-    sb.append("6. Quit\n");
-    sb.append("Enter valid choice");
+    sb.append("----------------------------\n");
+    sb.append("          STOCKS\n");
+    sb.append("----------------------------\n");
+    sb.append("1. CREATE NEW PORTFOLIO\n");
+    sb.append("2. ADD STOCKS TO A PORTFOLIO\n");
+    sb.append("3. VIEW PORTFOLIO NAMES\n");
+    sb.append("4. VIEW PORTFOLIO AMOUNT BY DATE\n");
+    sb.append("5. VIEW PORTFOLIO COMPOSITION\n");
+    sb.append("6. QUIT\n");
+    sb.append("------------------------------");
     displayInput(sb.toString());
   }
 
   @Override
   public String showEnterNewPortfolioName(){
-    displayInput("Enter a name for the new portfolio");
+    displayInput("ENTER PORTFOLIO NAME:");
     return nextInput();
   }
 
   @Override
   public String showTicker(){
-    displayInput("Enter ticker of the stock you wish to buy.");
+    displayInput("ENTER STOCK TICKER:");
     return nextInput();
   }
 
   @Override
   public int showQuantity(){
     while(true) {
-      displayInput("Enter quantity of the stock you want to buy.");
+      displayInput("ENTER STOCK QUANTITY:");
       String quantity = nextInput();
       try{
         int quantityInt = Integer.parseInt(quantity);
         return quantityInt;
-      } catch (InputMismatchException ex) {
-        displayInput("Please enter whole numbers!");
+      } catch (NumberFormatException ex) {
+        displayInput("STOCK QUANTITY SHOULD BE WHOLE NUMBERS ONLY.");
       }
     }
   }
 
   @Override
   public String showPostConfirmation(){
-    displayInput("Order placed successfully!");
+    displayInput("ORDER PLACED SUCCESSFULLY!");
     while(true) {
-      displayInput("Do you wish to add more stocks?(Y/N)");
+      displayInput("DO YOU WISH TO ADD MORE STOCKS? (Y/N)");
       String confirmation = nextInput();
       if (confirmation.equals("Y") || confirmation.equals("N")) {
         return confirmation;
       }
-      displayInput("Invalid input. Enter valid input!");
+      displayInput("ENTER Y/N INPUT.");
     }
   }
 
   @Override
   public String showQuit() {
     while (true) {
-      displayInput("Do you want to quit?(Y/N)");
+      displayInput("DO YOU WANT TO QUIT? (Y/N)");
       String confirmation = nextInput();
       if (confirmation.equals("Y") || confirmation.equals("N")) {
         return confirmation;
       }
-      displayInput("Invalid input. Enter valid input!");
-    }
-  }
-
-  @Override
-  public String showStockMenu() {
-      StringBuilder sb = new StringBuilder();
-      sb.append("Select one of the option:");
-      sb.append("1. Buy a stock");
-      sb.append("2. Sell a stock");
-      displayInput(sb.toString());
-      while (true) {
-        String option = nextInput();
-        if (option.equals("1") || option.equals("2")) {
-          return option;
-        }
-      displayInput("Invalid input. Enter valid input!");
+      displayInput("INVALID INPUT.");
     }
   }
 
   @Override
   public String showPortfolioMenuOption() {
     StringBuilder sb = new StringBuilder();
-    sb.append("1. Create new portfolio through console\n");
-    sb.append("2. Create new portfolio through file");
+    sb.append("1. CREATE PORTFOLIO THROUGH CONSOLE\n");
+    sb.append("2. CREATE PORTFOLIO READING FILE.");
     displayInput(sb.toString());
     while (true) {
       String option = nextInput();
       if (option.equals("1") || option.equals("2")) {
         return option;
       }
-      displayInput("Invalid input. Enter valid input!");
+      displayInput("INVALID INPUT.");
     }
   }
 
   @Override
   public void showInvalidPortfolioName() {
-    displayInput("Please enter a valid portfolio name!");
+    displayInput("ENTER VALID PORTFOLIO NAME.");
   }
 
   @Override
   public String showFileName() {
-    displayInput("Enter file name");
+    displayInput("ENTER FILE NAME:");
     return nextInput();
   }
 
   @Override
   public void showInvalidFileError() {
-    displayInput("Invalid file.");
+    displayInput("INVALID FILE.");
   }
 
   @Override
   public void showOrderCompleted(){
-    displayInput("Order Completed.");
+    displayInput("ORDER COMPLETED.");
   }
 
   @Override
   public void showMenuMessage() {
-    displayInput("Portfolio locked!");
-    displayInput("Going to the main menu.");
+    displayInput("PORTFOLIO LOCKED!");
+    displayInput("EXITING TO MAIN MENU.");
   }
 
   @Override
@@ -186,33 +206,34 @@ public class View implements IView {
   }
 
   @Override
-  public void showEnterPortfolioToAddStocks() {
-    displayInput("Enter portfolio name to add stocks!");
+  public String showEnterPortfolioToAddStocks() {
+    displayInput("ENTER PORTFOLIO NAME:");
+    return nextInput();
   }
 
   @Override
   public void showValidPortfolio() {
-    displayInput("Portfolio found!");
+    displayInput("PORTFOLIO FOUND.");
   }
 
   @Override
   public void showPortfolioMessage() {
-    displayInput("Enter portfolio name : ");
+    displayInput("ENTER PORTFOLIO NAME:");
   }
 
   @Override
   public void showStockPortfolio(String[][] composition) {
     StringBuilder sb = new StringBuilder();
-    sb.append("Your portfolio composition is: \n");
+    sb.append("YOUR PORTFOLIO COMPOSITION IS: \n");
     for(int i=0;i<composition.length;i++){
       int j=0;
-      sb.append("Ticker : ");
+      sb.append("TICKER : ");
       sb.append(composition[i][j]);
-      sb.append(" Quantity: ");
+      sb.append(" QUANTITY: ");
       sb.append(composition[i][++j]);
-      sb.append(" Buy Price : ");
+      sb.append(" BUY PRICE : ");
       sb.append(composition[i][++j]);
-      sb.append(" Current Value : ");
+      sb.append(" CURRENT VALUE : ");
       sb.append(composition[i][++j]);
       sb.append("\n");
     }
@@ -226,23 +247,23 @@ public class View implements IView {
 
   @Override
   public void showTickerError() {
-    displayInput("Please enter a valid ticker!");
+    displayInput("ENTER VALID TICKER.");
   }
 
   @Override
   public void showPortfolioLockedError() {
-    displayInput("This portfolio is locked");
-    displayInput("Enter unlocked portfolio name or create a new portfolio");
+    displayInput("THIS PORTFOLIO IS LOCKED.");
+    displayInput("ENTER UNLOCKED PORTFOLIO NAME OR CREATE A NEW PORTFOLIO.");
   }
 
   @Override
   public void showPortfolioExists() {
-    displayInput("Portfolio already exists");
+    displayInput("PORTFOLIO ALREADY EXISTS");
   }
 
   @Override
   public void showPortfolioCreatedSuccessfully(String name) {
-    displayInput("Portfolio "+ name +" created succesfully.");
+    displayInput("PORTFOLIO "+ name +" CREATED SUCCESFULLY!");
   }
 
   @Override

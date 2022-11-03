@@ -10,6 +10,9 @@ public interface IView {
   int showQuantity();
   String showPostConfirmation();
   String showQuit();
+  void displayInput(String input);
+  boolean isValidDate(String input);
+  String showDate();
 
   String showStockMenu();
 
@@ -22,7 +25,7 @@ public interface IView {
 
   void showMenuMessage();
   void showPortfolioNames(String[] names);
-  void showEnterPortfolioToAddStocks();
+  String showEnterPortfolioToAddStocks();
   void showValidPortfolio();
   void showPortfolioMessage();
   void showStockPortfolio(String[][] composition);

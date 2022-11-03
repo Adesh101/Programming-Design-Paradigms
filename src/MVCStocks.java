@@ -19,6 +19,6 @@ public class MVCStocks {
     IOperation operation = new Operation(stocks, portfolio);
     IView view = new View(new InputStreamReader(System.in), System.out);
     IController controller = new Controller(operation, view);
-    controller.go();
+    controller.go(operation);
   }
 }

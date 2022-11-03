@@ -6,23 +6,14 @@ import java.util.Scanner;
 
 public class showComposition implements IActions {
 
-  private Scanner in;
-  private IView view;
-  private IOperation operation;
+  private String portfolioName;
 
-  public showComposition(IOperation operation, IView view){
-    this.operation=operation;
-    this.view=view;
-    this.in= new Scanner(System.in);
+  public showComposition (String portfolioName) {
+    this.portfolioName = portfolioName;
   }
 
   @Override
-  public void go() {
-    view.showPortfolioMessage();
-    String portfolioName = in.nextLine();
-    if(operation.getPortfolio(portfolioName)){
-      view.showValidPortfolio();
-      view.showStockPortfolio(operation.getStocksMap(portfolioName));
-    }
+  public String go(IOperation operation) {
+    return "Portfolio composition for " + this.portfolioName + " is: \n" + operation.getPortfolioComposition(this.portfolioName);
   }
 }

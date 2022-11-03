@@ -1,30 +1,19 @@
 package Controller.actions;
 
 import Model.Operation.IOperation;
-import View.IView;
-import java.util.Scanner;
+import Model.Operation.Operation;
 
 public class createNewPortfolio implements IActions {
-  private Scanner in;
-  private IView view;
-  private IOperation operation;
   private String portfolioName;
-//  private addStockToPortfolioHelper helper;
 
-  public createNewPortfolio(IOperation operation, IView view) {
-    this.operation = operation;
-    this.in = new Scanner(System.in);
-    this.view = view;
-    this.portfolioName = "";
+  public createNewPortfolio(String portfolioName) {
+    this.portfolioName = portfolioName;
   }
 
   @Override
-  public void go() {
-    this.portfolioName = view.showEnterNewPortfolioName(); //Check why nextline here is not working
-    if(operation.checkPortfolioAlreadyExists(portfolioName)){
-      view.showPortfolioExists();
-    }
-    operation.createNewPortfolio(portfolioName);
-    view.showPortfolioCreatedSuccessfully(portfolioName);
+  public String go(IOperation operation) {
+    operation.createNewPortfolio(this.portfolioName);
+    return "Portfolio " + this.portfolioName + " successfully created. \n";
   }
+
 }
