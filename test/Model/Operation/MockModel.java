@@ -6,10 +6,8 @@ import java.util.List;
 
 public class MockModel implements IOperation {
   private StringBuilder log;
-  private final int uniqueCode;
-  public MockModel(StringBuilder log, int uniqueCode){
+  public MockModel(StringBuilder log){
     this.log=log;
-    this.uniqueCode=uniqueCode;
   }
   @Override
   public String createNewPortfolio(String portfolioName) {
@@ -88,7 +86,6 @@ public class MockModel implements IOperation {
   @Override
   public void callStockAPIHelper(String ticker) {
     log.append("Ticker: "+ ticker);
-
   }
 
   @Override
@@ -104,7 +101,7 @@ public class MockModel implements IOperation {
 
   @Override
   public void getCurrentPriceByDate(String ticker, String date) {
-log.append("Ticker: "+ticker+"Date: "+ date);
+    log.append("Ticker: "+ticker+"Date: "+ date);
   }
 
   @Override
